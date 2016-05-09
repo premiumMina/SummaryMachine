@@ -19,6 +19,17 @@ public class LeftPanel extends JPanel {
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setLayout(new GridLayout(6, 0));
 
+		UserIdCheckPanel userIdCheckPanel = new UserIdCheckPanel();
+		this.add(userIdCheckPanel);
+
+		DocumentUrlPanel docUrlPanel = new DocumentUrlPanel();
+		this.add(docUrlPanel);
+
+		SearchKeywordPanel searchKeyPanel = new SearchKeywordPanel();// 1
+		this.add(searchKeyPanel);
+
+		ResultPanel resultPanel = new ResultPanel();
+		this.add(resultPanel);
 	}
 
 }
