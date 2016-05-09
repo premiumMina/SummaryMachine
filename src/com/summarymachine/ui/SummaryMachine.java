@@ -36,7 +36,6 @@ public class SummaryMachine extends JFrame {
 		leftAllPanel.leftComponents(getContentPane());
 
 		JSplitPane jsp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-
 		jsp.add(rightAllPanel, JSplitPane.RIGHT);
 		jsp.add(leftAllPanel, JSplitPane.LEFT);
 
@@ -45,6 +44,7 @@ public class SummaryMachine extends JFrame {
 		setVisible(true);
 		setResizable(false);
 	}
+	
 	public static void main(String[] args) {
 		new SummaryMachine();
 	}

@@ -10,7 +10,7 @@ import javax.swing.JTabbedPane;
 public class RightPanel extends JPanel {
 	private int panelWidth;
 	private int panelHeight;
-
+	
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
 		this.panelHeight = panelHeight;
@@ -24,15 +24,27 @@ public class RightPanel extends JPanel {
 		rightFirstPage.setLayout(null);
 		JPanel rightSecondPage = new JPanel();
 		JPanel rightThirdPage = new JPanel();
-
-		rightFirstPage.setLayout(null);
+		JPanel rightForthPage = new JPanel();
 
 		JTabbedPane jtb = new JTabbedPane();
-		jtb.add("First page", rightFirstPage);
+		jtb.add("Analyzer", rightFirstPage);
 		jtb.add("Second page", rightSecondPage);
 		jtb.add("Third page", rightThirdPage);
+		jtb.add("Forth page", rightForthPage);
 		jtb.setBounds(0, 0, panelWidth, 20);
 		this.add(jtb);
+
+		SummaryTextPanel summaryTextPanel = new SummaryTextPanel();
+		summaryTextPanel.setBounds(20, 30, 500, 130);
+		rightFirstPage.add(summaryTextPanel);
+
+		WordGraphPanel wordFrequency = new WordGraphPanel();
+		wordFrequency.setBounds(20, 180, 500, 200);
+		rightFirstPage.add(wordFrequency);
+
+		WordAccuracyPanel wordAccuracyPanel= new WordAccuracyPanel();
+		wordAccuracyPanel.setBounds(20, 400, 300, 100);
+		rightFirstPage.add(wordAccuracyPanel);
 
 	}
 }
