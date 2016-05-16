@@ -17,7 +17,7 @@ public class SummaryMachine extends JFrame {
 	private final int screenHeight = 600;
 
 	public SummaryMachine() {
-		setTitle("Text Summary");
+		setTitle("Summary Machine");
 		setSize(screenWidth, screenHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initComponents(getContentPane());
@@ -33,6 +33,7 @@ public class SummaryMachine extends JFrame {
 		LeftPanel leftAllPanel = new LeftPanel((screenWidth / 3), screenHeight - 50);
 
 		rightAllPanel.rightComponents(getContentPane());
+		leftAllPanel.setRightPanel(rightAllPanel);
 		leftAllPanel.leftComponents(getContentPane());
 
 		JSplitPane jsp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -44,7 +45,7 @@ public class SummaryMachine extends JFrame {
 		setVisible(true);
 		setResizable(false);
 	}
-	
+
 	public static void main(String[] args) {
 		new SummaryMachine();
 	}

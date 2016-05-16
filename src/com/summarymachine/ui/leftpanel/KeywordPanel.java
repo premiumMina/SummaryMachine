@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-public class SearchKeywordPanel extends JPanel{
+public class KeywordPanel extends JPanel {
 	private JCheckBox keywordBtn;
 	private JTextField keywordField;
 
@@ -20,7 +20,7 @@ public class SearchKeywordPanel extends JPanel{
 		return keywordBtn;
 	}
 
-	public SearchKeywordPanel() {
+	public KeywordPanel() {
 		this.setLayout(new FlowLayout());
 		TitledBorder border = new TitledBorder("Option");
 		this.setBorder(border);
@@ -28,7 +28,6 @@ public class SearchKeywordPanel extends JPanel{
 		keywordBtn = new JCheckBox("Key");
 		keywordBtn.setSize(60, 25);
 		this.add(keywordBtn);
-
 
 		keywordField = new JTextField(20);
 		keywordField.setForeground(Color.BLACK);

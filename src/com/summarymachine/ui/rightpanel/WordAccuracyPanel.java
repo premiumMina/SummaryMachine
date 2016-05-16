@@ -5,11 +5,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
-import com.summarymachine.ui.leftpanel.SearchKeywordPanel;
+import com.summarymachine.ui.leftpanel.KeywordPanel;
 
 public class WordAccuracyPanel extends JPanel {
 	private JTextArea keywordText;
 	private JTextArea keywordAccuracy;
+	private KeywordPanel keywordPanel;
+
+	public void setKeywordPanel(KeywordPanel keywordPanel) {
+		this.keywordPanel = keywordPanel;
+	}
+
+	public void setKeywordText(String keyword) {
+		keywordText.setText(keyword);
+	}
 
 	public WordAccuracyPanel() {
 		this.setLayout(null);

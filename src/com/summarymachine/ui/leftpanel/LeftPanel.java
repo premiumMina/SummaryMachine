@@ -6,13 +6,20 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+import com.summarymachine.ui.rightpanel.RightPanel;
+
 public class LeftPanel extends JPanel {
 	private int panelWidth;
 	private int panelHeight;
+	private RightPanel rightPanel;
 
 	public LeftPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth + 20;
 		this.panelHeight = panelHeight;
+	}
+
+	public void setRightPanel(RightPanel rightPanel) {
+		this.rightPanel = rightPanel;
 	}
 
 	public void leftComponents(Container contentPane) {
@@ -25,10 +32,12 @@ public class LeftPanel extends JPanel {
 		DocumentUrlPanel docUrlPanel = new DocumentUrlPanel();
 		this.add(docUrlPanel);
 
-		SearchKeywordPanel searchKeyPanel = new SearchKeywordPanel();// 1
-		this.add(searchKeyPanel);
+		KeywordPanel keywordPanel = new KeywordPanel();// 1
+		this.add(keywordPanel);
 
 		ResultPanel resultPanel = new ResultPanel();
+		resultPanel.setRightPanel(rightPanel);
+		resultPanel.setKeywordPanel(keywordPanel);
 		this.add(resultPanel);
 	}
 

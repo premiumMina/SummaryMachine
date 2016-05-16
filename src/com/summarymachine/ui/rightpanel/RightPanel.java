@@ -7,13 +7,21 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import com.summarymachine.ui.leftpanel.KeywordPanel;
+
 public class RightPanel extends JPanel {
 	private int panelWidth;
 	private int panelHeight;
-	
+	private WordAccuracyPanel wordAccuracyPanel;
+	private KeywordPanel keywordPanel;
+
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
 		this.panelHeight = panelHeight;
+	}
+
+	public WordAccuracyPanel getWordAccuracyPanel() {
+		return wordAccuracyPanel;
 	}
 
 	public void rightComponents(Container contentPane) {
@@ -42,7 +50,9 @@ public class RightPanel extends JPanel {
 		wordFrequency.setBounds(20, 180, 500, 200);
 		rightFirstPage.add(wordFrequency);
 
-		WordAccuracyPanel wordAccuracyPanel= new WordAccuracyPanel();
+		wordAccuracyPanel = new WordAccuracyPanel();
+		keywordPanel = new KeywordPanel();
+		wordAccuracyPanel.setKeywordPanel(keywordPanel);
 		wordAccuracyPanel.setBounds(20, 400, 300, 100);
 		rightFirstPage.add(wordAccuracyPanel);
 
