@@ -7,6 +7,8 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 public class SummaryTextPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+
 	public SummaryTextPanel() {
 		this.setLayout(new BorderLayout());
 		TitledBorder border = new TitledBorder("Text");

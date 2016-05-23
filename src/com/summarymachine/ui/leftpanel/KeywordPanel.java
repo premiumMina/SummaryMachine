@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 public class KeywordPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JCheckBox keywordBtn;
 	private JTextField keywordField;
 

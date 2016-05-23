@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
 
 public class LeftPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private int panelWidth;
 	private int panelHeight;
 	private RightPanel rightPanel;

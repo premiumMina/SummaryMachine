@@ -2,11 +2,8 @@ package com.summarymachine.ui.leftpanel;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -14,6 +11,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 public class DocumentUrlPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+
 	public DocumentUrlPanel() {
 		this.setLayout(new FlowLayout());
 		TitledBorder border = new TitledBorder("File Path");

@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JViewport;
 
 import com.summarymachine.ui.rightpanel.RightPanel;
 import com.summarymachine.ui.rightpanel.WordAccuracyPanel;
 
 public class ResultPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private KeywordPanel keywordPanel;
 	private WordAccuracyPanel wordAccuracyPanel;
 	private RightPanel rightPanel;

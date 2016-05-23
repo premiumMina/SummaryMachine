@@ -8,6 +8,7 @@ import javax.swing.border.TitledBorder;
 import com.summarymachine.ui.leftpanel.KeywordPanel;
 
 public class WordAccuracyPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextArea keywordText;
 	private JTextArea keywordAccuracy;
 	private KeywordPanel keywordPanel;

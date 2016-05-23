@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 import com.summarymachine.ui.leftpanel.KeywordPanel;
 
 public class RightPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private int panelWidth;
 	private int panelHeight;
 	private WordAccuracyPanel wordAccuracyPanel;
