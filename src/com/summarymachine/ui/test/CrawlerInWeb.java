@@ -1,18 +1,18 @@
 package com.summarymachine.ui.test;
 
-import java.awt.RadialGradientPaint;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.lang.model.element.Element;
-import javax.sound.midi.Synthesizer;
+import org.snu.ids.ha.index.Keyword;
+import org.snu.ids.ha.index.KeywordExtractor;
+import org.snu.ids.ha.index.KeywordList;
 
+/* 꼬꼬마 한글 형태소 분석 색인어 추출하기.*/
 public class CrawlerInWeb {
 	public static void main(String[] args) {
 		try {
@@ -34,7 +34,6 @@ public class CrawlerInWeb {
 					readText = readText.trim();
 					if (!readText.isEmpty()) {
 						articleList.add(readText);
-
 					}
 				}
 				if (end) {
@@ -47,15 +46,28 @@ public class CrawlerInWeb {
 				element = (String) iterator.next();
 			}
 
-			for (int index = 0; index < element.length(); index++) {
-				System.out.print(element.charAt(index));
-				if (element.charAt(index) == '.') {
-					System.out.println();
-				}
+			/*
+			 * for (int index = 0; index < element.length(); index++) {
+			 * System.out.print(element.charAt(index)); if
+			 * (element.charAt(index) == '.') { System.out.println(); } }
+			 */
+
+			// string to extract keywords
+			String strToExtrtKwrd = element;
+
+			// init KeywordExtractor
+			KeywordExtractor ke = new KeywordExtractor();
+
+			// extract keywords
+			KeywordList kl = ke.extractKeyword(strToExtrtKwrd, true);
+
+			// print result
+			for (int i = 0; i < kl.size(); i++) {
+				Keyword kwrd = kl.get(i);
+				if (kwrd.getCnt() >= 2)
+					System.out.println(kwrd.getString() + "\t" + kwrd.getCnt() + " ");
+				br.close();
 			}
-
-			br.close();
-
 		} catch (IOException ie) {
 			System.out.println("파일이 존재하지 않습니다.");
 
