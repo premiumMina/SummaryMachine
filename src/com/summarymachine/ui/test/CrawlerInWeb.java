@@ -19,7 +19,7 @@ public class CrawlerInWeb {
 			BufferedReader br;
 			String readText;
 
-			br = new BufferedReader(new FileReader("C:\\Users\\MadPlay\\Desktop\\Mina\\SummaryMachine\\test.txt"));
+			br = new BufferedReader(new FileReader("./test.txt"));
 			boolean start = false;
 			boolean end = false;
 			ArrayList<String> articleList = new ArrayList<String>();
