@@ -1,6 +1,5 @@
 package com.summarymachine.ui.leftpanel;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -9,6 +8,10 @@ import javax.swing.JPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
 
+/**
+ * 왼쪽 컴포넌트 패널
+ * @author PremiumMina
+ */
 public class LeftPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int panelWidth;
@@ -25,7 +28,7 @@ public class LeftPanel extends JPanel {
 		this.rightPanel = rightPanel;
 	}
 
-	public void leftComponents(Container contentPane) {
+	public void initLeftComponents() {
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setLayout(new GridLayout(6, 0));
 

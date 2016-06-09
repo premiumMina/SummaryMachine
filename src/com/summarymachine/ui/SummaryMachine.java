@@ -9,11 +9,13 @@ import javax.swing.JSplitPane;
 
 import com.summarymachine.ui.leftpanel.LeftPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
-import com.summarymachine.ui.test.CrawlerInWeb;
 
+/**
+ * 메인 프레임
+ * @author PremiumMina
+ */
 public class SummaryMachine extends JFrame {
 	private static final long serialVersionUID = 1L;
-	boolean continuousLayout = true;
 	private final int screenWidth = 900;
 	private final int screenHeight = 600;
 
@@ -25,23 +27,28 @@ public class SummaryMachine extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * 모든 컴포넌트를 초기화한다.
+	 * @author PremiumMina
+	 */
 	private void initComponents(Container contentPane) {
 
 		this.setLayout(new FlowLayout());
 		JPanel mainPanel = new JPanel();
 
 		RightPanel rightAllPanel = new RightPanel((screenWidth / 2 + 100), screenHeight - 50);
+		rightAllPanel.initRightComponents();
+		
 		LeftPanel leftAllPanel = new LeftPanel((screenWidth / 3), screenHeight - 50);
+		leftAllPanel.setRightPanel(rightAllPanel); 
+		leftAllPanel.initLeftComponents();
 
-		rightAllPanel.rightComponents(getContentPane());
-		leftAllPanel.setRightPanel(rightAllPanel);
-		leftAllPanel.leftComponents(getContentPane());
+		/* 좌우 영역으로 분할한다. */
+		JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		jSplitPane.add(rightAllPanel, JSplitPane.RIGHT);
+		jSplitPane.add(leftAllPanel, JSplitPane.LEFT);
 
-		JSplitPane jsp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		jsp.add(rightAllPanel, JSplitPane.RIGHT);
-		jsp.add(leftAllPanel, JSplitPane.LEFT);
-
-		mainPanel.add(jsp);
+		mainPanel.add(jSplitPane);
 		contentPane.add(mainPanel);
 		setVisible(true);
 		setResizable(false);
@@ -50,5 +57,4 @@ public class SummaryMachine extends JFrame {
 	public static void main(String[] args) {
 		new SummaryMachine();
 	}
-
 }

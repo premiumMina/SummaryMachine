@@ -1,6 +1,5 @@
 package com.summarymachine.ui.rightpanel;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -10,6 +9,10 @@ import javax.swing.JTabbedPane;
 import com.summarymachine.ui.leftpanel.KeywordPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
 
+/**
+ * 오른쪽 컴포넌트 패널
+ * @author PremiumMina
+ */
 public class RightPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int panelWidth;
@@ -36,7 +39,7 @@ public class RightPanel extends JPanel {
 		return crawlerInWeb;
 	}
 	
-	public void rightComponents(Container contentPane) {
+	public void initRightComponents() {
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setLayout(new GridLayout(1, 1));
 
@@ -67,6 +70,5 @@ public class RightPanel extends JPanel {
 		wordAccuracyPanel.setKeywordPanel(keywordPanel);
 		wordAccuracyPanel.setBounds(20, 400, 300, 100);
 		rightFirstPage.add(wordAccuracyPanel);
-
 	}
 }
