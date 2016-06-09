@@ -12,9 +12,23 @@ import org.snu.ids.ha.index.Keyword;
 import org.snu.ids.ha.index.KeywordExtractor;
 import org.snu.ids.ha.index.KeywordList;
 
+import com.summarymachine.ui.leftpanel.DocumentUrlPanel;
+
 /* 꼬꼬마 한글 형태소 분석 색인어 추출하기.*/
 public class CrawlerInWeb {
-	public static void main(String[] args) {
+	public static String result;
+
+	public String getResult() {
+		return result;
+	}
+
+	public static void setResult(String result) {
+		CrawlerInWeb.result = result;
+	}
+
+	public CrawlerInWeb() {
+
+		StringBuffer sb = new StringBuffer();
 		try {
 			BufferedReader br;
 			String readText;
@@ -34,11 +48,15 @@ public class CrawlerInWeb {
 					readText = readText.trim();
 					if (!readText.isEmpty()) {
 						articleList.add(readText);
+						sb.append(articleList);
 					}
 				}
+
 				if (end) {
+					result = sb.toString();
 					break;
 				}
+
 			}
 			Iterator iterator = articleList.iterator();
 			String element = "";
@@ -64,15 +82,17 @@ public class CrawlerInWeb {
 			// print result
 			for (int i = 0; i < kl.size(); i++) {
 				Keyword kwrd = kl.get(i);
-				if (kwrd.getCnt() >= 2)
-					System.out.println(kwrd.getString() + "\t" + kwrd.getCnt() + " ");
+				/*
+				 * if (kwrd.getCnt() >= 2) System.out.println(kwrd.getString() +
+				 * "\t" + kwrd.getCnt() + " ");
+				 */
 				br.close();
 			}
 		} catch (IOException ie) {
-			System.out.println("파일이 존재하지 않습니다.");
+			System.out.println(ie);
 
-		} catch (Exception e) {
-			System.out.println(e);
+		} catch (Exception ee) {
+			System.out.println(ee);
 		}
 	}
 

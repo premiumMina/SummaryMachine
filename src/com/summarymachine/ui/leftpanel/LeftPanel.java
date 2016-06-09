@@ -7,12 +7,14 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 import com.summarymachine.ui.rightpanel.RightPanel;
+import com.summarymachine.ui.test.CrawlerInWeb;
 
 public class LeftPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int panelWidth;
 	private int panelHeight;
 	private RightPanel rightPanel;
+	private CrawlerInWeb crawlerInWeb;
 
 	public LeftPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth + 20;
@@ -33,13 +35,18 @@ public class LeftPanel extends JPanel {
 		DocumentUrlPanel docUrlPanel = new DocumentUrlPanel();
 		this.add(docUrlPanel);
 
-		KeywordPanel keywordPanel = new KeywordPanel();// 1
+		KeywordPanel keywordPanel = new KeywordPanel();
 		this.add(keywordPanel);
 
 		ResultPanel resultPanel = new ResultPanel();
 		resultPanel.setRightPanel(rightPanel);
 		resultPanel.setKeywordPanel(keywordPanel);
+		resultPanel.setDocumentUrlPanel(docUrlPanel);
+		resultPanel.setSummaryTextPanel(rightPanel.getSummaryTextPanel());
+
+		resultPanel.setCrawlerInWeb(crawlerInWeb);
 		this.add(resultPanel);
+
 	}
 
 }

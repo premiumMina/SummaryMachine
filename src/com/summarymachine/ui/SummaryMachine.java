@@ -9,6 +9,7 @@ import javax.swing.JSplitPane;
 
 import com.summarymachine.ui.leftpanel.LeftPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
+import com.summarymachine.ui.test.CrawlerInWeb;
 
 public class SummaryMachine extends JFrame {
 	private static final long serialVersionUID = 1L;

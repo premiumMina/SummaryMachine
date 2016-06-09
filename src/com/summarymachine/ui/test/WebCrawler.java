@@ -6,10 +6,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.sound.midi.Synthesizer;
+import javax.swing.JTextField;
+
+import com.summarymachine.ui.leftpanel.DocumentUrlPanel;
+
 public class WebCrawler {
+
 	public static void main(String arg[]) {
+
 		URL url = null;
 		try {
+			/* 입력된 URL주소가 넘어와야 함. */
 			url = new URL(
 					"http://news.naver.com/main/read.nhn?oid=437&sid1=102&aid=0000118700&mid=shm&mode=LSD&nh=20160516225309");
 		} catch (MalformedURLException el) {
@@ -60,4 +68,5 @@ public class WebCrawler {
 			}
 		}
 	}
+
 }

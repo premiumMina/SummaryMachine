@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.summarymachine.ui.leftpanel.KeywordPanel;
+import com.summarymachine.ui.test.CrawlerInWeb;
 
 public class RightPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -15,6 +16,8 @@ public class RightPanel extends JPanel {
 	private int panelHeight;
 	private WordAccuracyPanel wordAccuracyPanel;
 	private KeywordPanel keywordPanel;
+	private SummaryTextPanel summaryTextPanel;
+	private CrawlerInWeb crawlerInWeb;
 
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
@@ -25,6 +28,14 @@ public class RightPanel extends JPanel {
 		return wordAccuracyPanel;
 	}
 
+	public SummaryTextPanel getSummaryTextPanel() {
+		return summaryTextPanel;
+	}
+	
+	public CrawlerInWeb getCrawlerInWeb(){
+		return crawlerInWeb;
+	}
+	
 	public void rightComponents(Container contentPane) {
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setLayout(new GridLayout(1, 1));
@@ -43,7 +54,7 @@ public class RightPanel extends JPanel {
 		jtb.setBounds(0, 0, panelWidth, 20);
 		this.add(jtb);
 
-		SummaryTextPanel summaryTextPanel = new SummaryTextPanel();
+		summaryTextPanel = new SummaryTextPanel();
 		summaryTextPanel.setBounds(20, 30, 500, 130);
 		rightFirstPage.add(summaryTextPanel);
 
