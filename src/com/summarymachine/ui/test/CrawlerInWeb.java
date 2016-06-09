@@ -16,24 +16,33 @@ import com.summarymachine.ui.leftpanel.DocumentUrlPanel;
 
 /* 꼬꼬마 한글 형태소 분석 색인어 추출하기.*/
 public class CrawlerInWeb {
-	public static String result;
+	private String result;
+	private String docUrl;
 
 	public String getResult() {
-		return result;
+		return this.result;
 	}
 
-	public static void setResult(String result) {
-		CrawlerInWeb.result = result;
+	public void setResult(String result) {
+		this.result = result;
 	}
 
-	public CrawlerInWeb() {
+	public String getDocUrl() {
+		return this.docUrl;
+	}
+
+	public void setDocUrl(String docUrl) {
+		this.docUrl = docUrl;
+	}
+
+	public CrawlerInWeb(String docUrl) {
 
 		StringBuffer sb = new StringBuffer();
 		try {
 			BufferedReader br;
 			String readText;
 
-			br = new BufferedReader(new FileReader("./test.txt"));
+			br = new BufferedReader(new FileReader(docUrl));
 			boolean start = false;
 			boolean end = false;
 			ArrayList<String> articleList = new ArrayList<String>();

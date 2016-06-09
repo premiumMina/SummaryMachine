@@ -21,7 +21,7 @@ public class DocumentUrlPanel extends JPanel {
 	public void setUrlField(JTextField urlField) {
 		this.urlField = urlField;
 	}
-
+	
 	public JTextField getUrlField() {
 		return urlField;
 	}
