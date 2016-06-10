@@ -11,7 +11,7 @@ import com.summarymachine.ui.rightpanel.SummaryTextPanel;
 import com.summarymachine.ui.rightpanel.WordAccuracyPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
 
-public class ResultPanel extends JPanel {
+public class SearchPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private KeywordPanel keywordPanel;
 	private WordAccuracyPanel wordAccuracyPanel;
@@ -44,7 +44,7 @@ public class ResultPanel extends JPanel {
 		this.summaryTextPanel = summaryTextPanel;
 	}
 
-	public ResultPanel() {
+	public SearchPanel() {
 		this.setLayout(null);
 		JButton searchBtn = new JButton("search");
 		searchBtn.setBounds(240, 10, 80, 25);
@@ -52,9 +52,8 @@ public class ResultPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (documentUrlPanel.getUrlField().getText().length() > 0) {
-					CrawlerInWeb crawlerInWeb = new CrawlerInWeb((String)documentUrlPanel.getUrlField().getText());
-					
+				if (documentUrlPanel.getUrlField().length() > 0) {
+					CrawlerInWeb crawlerInWeb = new CrawlerInWeb((String)documentUrlPanel.getUrlField());
 					summaryTextPanel.setSummaryTextField(crawlerInWeb.getResult());
 				}
 				if (keywordPanel.getCheckBox().isSelected())

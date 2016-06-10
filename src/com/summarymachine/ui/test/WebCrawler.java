@@ -17,21 +17,18 @@ public class WebCrawler {
 
 		URL url = null;
 		try {
-			/* 입력된 URL주소가 넘어와야 함. */
 			url = new URL(
 					"http://news.naver.com/main/read.nhn?oid=437&sid1=102&aid=0000118700&mid=shm&mode=LSD&nh=20160516225309");
 		} catch (MalformedURLException el) {
-			System.out.println("잘못된 URL 형식입니다.");
+			System.out.println("This is a wrong type.");
 			System.out.println(el);
 			System.exit(1);
 		}
 
 		FileOutputStream fos = null;
 		try {
-			/* URL 클래스 openConnection()으로 객체 얻는다. */
 			URLConnection urlcon = url.openConnection();
 
-			/* 웹 문서의 헤드에서 contentType 읽어 온다. */
 			String contentType = urlcon.getContentType();
 
 			long dl = urlcon.getDate();
@@ -41,10 +38,9 @@ public class WebCrawler {
 			String sdate = format.format(d);
 
 			System.out.println("Content Type : " + contentType);
-			System.out.println("읽어온 시간 : " + sdate);
+			System.out.println("占싻억옙占� 占시곤옙 : " + sdate);
 
 			InputStream in = urlcon.getInputStream();
-			// URL 문서의 input stream을 불러온다.
 
 			fos = new FileOutputStream("test.txt");
 

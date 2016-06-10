@@ -18,14 +18,13 @@ public class DocumentUrlPanel extends JPanel {
 	private JTextField urlField;
 	private JButton upLoadBtn;
 
-	public void setUrlField(JTextField urlField) {
-		this.urlField = urlField;
+	public void setUrlField(String urlField) {
+		this.urlField.setText(urlField);
+	}
+	public String getUrlField(){
+		return urlField.getText();
 	}
 	
-	public JTextField getUrlField() {
-		return urlField;
-	}
-
 	public DocumentUrlPanel() {
 		this.setLayout(new FlowLayout());
 		TitledBorder border = new TitledBorder("File Path");

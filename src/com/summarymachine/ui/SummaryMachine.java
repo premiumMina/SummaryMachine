@@ -43,7 +43,6 @@ public class SummaryMachine extends JFrame {
 		leftAllPanel.setRightPanel(rightAllPanel); 
 		leftAllPanel.initLeftComponents();
 
-		/* 좌우 영역으로 분할한다. */
 		JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		jSplitPane.add(rightAllPanel, JSplitPane.RIGHT);
 		jSplitPane.add(leftAllPanel, JSplitPane.LEFT);

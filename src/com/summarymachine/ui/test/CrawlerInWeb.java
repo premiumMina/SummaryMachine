@@ -1,20 +1,14 @@
 package com.summarymachine.ui.test;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.snu.ids.ha.index.Keyword;
-import org.snu.ids.ha.index.KeywordExtractor;
-import org.snu.ids.ha.index.KeywordList;
-
-import com.summarymachine.ui.leftpanel.DocumentUrlPanel;
-
-/* ²¿²¿¸¶ ÇÑ±Û ÇüÅÂ¼Ò ºÐ¼® »öÀÎ¾î ÃßÃâÇÏ±â.*/
 public class CrawlerInWeb {
 	private String result;
 	private String docUrl;
@@ -42,15 +36,16 @@ public class CrawlerInWeb {
 			BufferedReader br;
 			String readText;
 
-			br = new BufferedReader(new FileReader(docUrl));
+			br =  new BufferedReader(new InputStreamReader(new FileInputStream(docUrl),"euc-kr"));
+			//new BufferedReader(new FileReader(docUrl));
 			boolean start = false;
 			boolean end = false;
 			ArrayList<String> articleList = new ArrayList<String>();
 
 			while ((readText = br.readLine()) != null) {
-				if (readText.contains("<!-- º»¹® ³»¿ë -->"))
+				if (readText.contains("articleBodyContents"))
 					start = true;
-				if (readText.contains("¢º "))
+				if (readText.contains("All Rights Reserved"))
 					end = true;
 				if (start) {
 					readText = removeHtmlTag(readText);
@@ -78,7 +73,7 @@ public class CrawlerInWeb {
 			 * System.out.print(element.charAt(index)); if
 			 * (element.charAt(index) == '.') { System.out.println(); } }
 			 */
-
+/*
 			// string to extract keywords
 			String strToExtrtKwrd = element;
 
@@ -91,12 +86,14 @@ public class CrawlerInWeb {
 			// print result
 			for (int i = 0; i < kl.size(); i++) {
 				Keyword kwrd = kl.get(i);
-				/*
+				
 				 * if (kwrd.getCnt() >= 2) System.out.println(kwrd.getString() +
 				 * "\t" + kwrd.getCnt() + " ");
-				 */
-				br.close();
+				 
+			
 			}
+*/	
+			br.close();
 		} catch (IOException ie) {
 			System.out.println(ie);
 
@@ -105,7 +102,7 @@ public class CrawlerInWeb {
 		}
 	}
 
-	/* ÀÚ¹Ù Á¤±Ô½Ä ¸Þ¼Òµå */
+	/* ï¿½ï¿½è«›ï¿½ ï¿½ï¿½æ´¹ï¿½ï¿½ï¿½ ï§Žï¿½ï¿½ï¿½ï¿½ï¿½ */
 	private static String removeHtmlTag(String content) {
 		Pattern SCRIPTS = Pattern.compile("<(no)?script[^>]*>.*?</(no)?script>", Pattern.DOTALL);
 		Pattern STYLE = Pattern.compile("<style[^>]*>.*</style>", Pattern.DOTALL);

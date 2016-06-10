@@ -41,7 +41,7 @@ public class LeftPanel extends JPanel {
 		KeywordPanel keywordPanel = new KeywordPanel();
 		this.add(keywordPanel);
 
-		ResultPanel resultPanel = new ResultPanel();
+		SearchPanel resultPanel = new SearchPanel();
 		resultPanel.setRightPanel(rightPanel);
 		resultPanel.setKeywordPanel(keywordPanel);
 		resultPanel.setDocumentUrlPanel(docUrlPanel);
