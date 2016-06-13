@@ -3,13 +3,14 @@ package com.summarymachine.ui.rightpanel;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 public class SummaryTextPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextArea summaryTextField;
-
+	
 	public void setSummaryTextField(String content) {
 		summaryTextField.setText(content);
 	}
@@ -22,6 +23,10 @@ public class SummaryTextPanel extends JPanel {
 		summaryTextField = new JTextArea(5, 10);
 		summaryTextField.setEditable(false);
 		this.add(summaryTextField);
+		
+		JScrollPane vertical = new JScrollPane(summaryTextField);
+		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        add(vertical);
 
 	}
 }

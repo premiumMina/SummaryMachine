@@ -23,7 +23,7 @@ public class SearchPanel extends JPanel {
 	public void setRightPanel(RightPanel rightPanel) {
 		this.rightPanel = rightPanel;
 	}
-	
+
 	public void setKeywordPanel(KeywordPanel keywordPanel) {
 		this.keywordPanel = keywordPanel;
 	}
@@ -53,8 +53,8 @@ public class SearchPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (documentUrlPanel.getUrlField().length() > 0) {
-					CrawlerInWeb crawlerInWeb = new CrawlerInWeb((String)documentUrlPanel.getUrlField());
-					summaryTextPanel.setSummaryTextField(crawlerInWeb.getResult());
+					CrawlerInWeb crawlerInWeb = new CrawlerInWeb((String) documentUrlPanel.getUrlField());
+					summaryTextPanel.setSummaryTextField(crawlerInWeb.getSortedResultSentence());
 				}
 				if (keywordPanel.getCheckBox().isSelected())
 					rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));

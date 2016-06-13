@@ -3,6 +3,7 @@ package com.summarymachine.ui.rightpanel;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
@@ -12,8 +13,12 @@ public class WordGraphPanel extends JPanel {
 		TitledBorder border = new TitledBorder("Word Frequency");
 		this.setBorder(border);
 
-		JTextArea summaryTextField = new JTextArea(5, 10);
-		summaryTextField.setEditable(false);
-		this.add(summaryTextField);
+		JTextArea summaryGraphField = new JTextArea(5, 10);
+		summaryGraphField.setEditable(false);
+		this.add(summaryGraphField);
+		
+		JScrollPane vertical = new JScrollPane(summaryGraphField);
+		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        add(vertical);
 	}
 }
