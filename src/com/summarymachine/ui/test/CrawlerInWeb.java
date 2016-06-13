@@ -8,7 +8,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,7 +19,6 @@ import org.snu.ids.ha.index.KeywordExtractor;
 import org.snu.ids.ha.index.KeywordList;
 
 public class CrawlerInWeb {
-	private String result;
 	private String sortedResultSentence;
 	private String docUrl;
 	private static int line;
@@ -50,6 +48,7 @@ public class CrawlerInWeb {
 
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(docUrl), "euc-kr"));
 			boolean start = false;
+			List<String> articleList = new ArrayList<String>();
 
 			while ((readText = br.readLine()) != null) {
 				if (readText.contains("articleBodyContents"))
@@ -62,6 +61,10 @@ public class CrawlerInWeb {
 				if (readText.contains("All Rights Reserved"))
 					break;
 			}
+			String result = sb.toString();
+			result = removeHtmlTag(result);
+			result = result.trim();
+
 			result = sb.toString();
 			result = removeHtmlTag(result);
 			result = result.trim();
@@ -126,13 +129,23 @@ public class CrawlerInWeb {
 				}
 			}
 
+			/* calculate a one line weight. */
+			for (int index = 0; index < line; index++) {
+				int sum = 0;
+				for (int total = 0; total < word.size(); total++) {
+					if (article.get(index).contains(word.get(total))) {
+						sum = sum + analyze.get(word.get(total));
+					}
+				}
+				sentenceAnalyze.put(sum, article.get(index));
+			}
 			br.close();
 		} catch (IOException ie) {
 			System.out.println(ie);
-
 		} catch (Exception ee) {
 			System.out.println(ee);
 		}
+
 	}
 
 	private static String removeHtmlTag(String content) {
