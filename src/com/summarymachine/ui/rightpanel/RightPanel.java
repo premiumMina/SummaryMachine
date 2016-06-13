@@ -5,6 +5,9 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import com.summarymachine.ui.leftpanel.KeywordPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
@@ -70,5 +73,35 @@ public class RightPanel extends JPanel {
 		wordAccuracyPanel.setKeywordPanel(keywordPanel);
 		wordAccuracyPanel.setBounds(20, 400, 300, 100);
 		rightFirstPage.add(wordAccuracyPanel);
+		
+		JPanel infoPanel = new JPanel();
+		TitledBorder infoTextborder = new TitledBorder("Program");
+		infoPanel.setBorder(infoTextborder);
+		String input = "Program Infomation";
+		JTextArea infoText = new JTextArea(12, 45);
+		infoText.setText(input);
+		infoText.setEditable(false);
+		infoPanel.add(infoText);
+		rightForthPage.add(infoPanel);
+
+		JPanel developerPanel = new JPanel();
+		TitledBorder developerBorder = new TitledBorder("Developer Introduction");
+		developerPanel.setBorder(developerBorder);
+		developerPanel.setLayout(new GridLayout(1, 2));
+
+		JTextArea minaText = new JTextArea(12, 23);
+		minaText.setLayout(new GridLayout(3, 1));
+		minaText.setEditable(false);
+		minaText.setText("Kim Min-A");
+		developerPanel.add(minaText);
+		
+
+		JTextArea daeun = new JTextArea(12, 23);
+		daeun.setLayout(new GridLayout(3, 1));
+		daeun.setEditable(false);
+		daeun.setText("Kim Da-Eun");
+		developerPanel.add(daeun);
+		
+		rightForthPage.add(developerPanel);
 	}
 }
