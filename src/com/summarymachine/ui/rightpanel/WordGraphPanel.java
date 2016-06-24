@@ -17,8 +17,8 @@ public class WordGraphPanel extends JPanel {
 		summaryGraphField.setEditable(false);
 		this.add(summaryGraphField);
 		
-		JScrollPane vertical = new JScrollPane(summaryGraphField);
-		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        add(vertical);
+		JScrollPane scrollPane = new JScrollPane(summaryGraphField);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        add(scrollPane);
 	}
 }

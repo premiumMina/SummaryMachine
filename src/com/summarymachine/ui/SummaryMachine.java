@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.summarymachine.jdbc.MySQLConn;
+import com.summarymachine.jdbc.UserInsertDAO;
 import com.summarymachine.ui.leftpanel.LeftPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
 
@@ -19,10 +21,12 @@ public class SummaryMachine extends JFrame {
 	private final int screenWidth = 900;
 	private final int screenHeight = 600;
 
+
 	public SummaryMachine() {
 		setTitle("Summary Machine");
 		setSize(screenWidth, screenHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		initComponents(getContentPane());
 		setVisible(true);
 	}
@@ -54,6 +58,7 @@ public class SummaryMachine extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		new MySQLConn();
 		new SummaryMachine();
 	}
 }

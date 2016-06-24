@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+import com.summarymachine.jdbc.UserInsertDAO;
 import com.summarymachine.ui.rightpanel.RightPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
 
@@ -35,20 +36,20 @@ public class LeftPanel extends JPanel {
 		UserIdCheckPanel userIdCheckPanel = new UserIdCheckPanel();
 		this.add(userIdCheckPanel);
 
-		DocumentUrlPanel docUrlPanel = new DocumentUrlPanel();
-		this.add(docUrlPanel);
+		DocumentUrlPanel documentUrlPanel = new DocumentUrlPanel();
+		this.add(documentUrlPanel);
 
 		KeywordPanel keywordPanel = new KeywordPanel();
 		this.add(keywordPanel);
-
-		SearchPanel resultPanel = new SearchPanel();
-		resultPanel.setRightPanel(rightPanel);
-		resultPanel.setKeywordPanel(keywordPanel);
-		resultPanel.setDocumentUrlPanel(docUrlPanel);
-		resultPanel.setSummaryTextPanel(rightPanel.getSummaryTextPanel());
-
-		resultPanel.setCrawlerInWeb(crawlerInWeb);
-		this.add(resultPanel);
+		
+		SearchPanel searchPanel = new SearchPanel();
+		searchPanel.setRightPanel(rightPanel);
+		searchPanel.setKeywordPanel(keywordPanel);
+		searchPanel.setDocumentUrlPanel(documentUrlPanel);
+		searchPanel.setUserIdCheckPanel(userIdCheckPanel);
+		searchPanel.setSummaryTextPanel(rightPanel.getSummaryTextPanel());
+		searchPanel.setCrawlerInWeb(crawlerInWeb);
+		this.add(searchPanel);
 
 	}
 

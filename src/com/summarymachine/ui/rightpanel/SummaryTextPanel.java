@@ -24,9 +24,9 @@ public class SummaryTextPanel extends JPanel {
 		summaryTextField.setEditable(false);
 		this.add(summaryTextField);
 		
-		JScrollPane vertical = new JScrollPane(summaryTextField);
-		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        add(vertical);
+		JScrollPane scrollPane = new JScrollPane(summaryTextField);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        add(scrollPane);
 
 	}
 }

@@ -22,11 +22,21 @@ public class CrawlerInWeb {
 	private String sortedResultSentence;
 	private String docUrl;
 	private static int line;
+	private String content;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 	public String getSortedResultSentence() {
 		return sortedResultSentence;
 	}
 
+	/* ?? */
 	public void setSortedResultSentence(String sortedResultSentence) {
 		this.sortedResultSentence = sortedResultSentence;
 	}
@@ -39,35 +49,47 @@ public class CrawlerInWeb {
 		this.docUrl = docUrl;
 	}
 
-	public CrawlerInWeb(String docUrl) {
+	public CrawlerInWeb(String docUrl, String contentType, int kind) {
 
 		StringBuffer sb = new StringBuffer();
+		setDocUrl(docUrl);
 		try {
-			BufferedReader br;
+			BufferedReader br = null;
 			String readText;
+			if (contentType.contains("UTF-8"))
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(docUrl), "UTF-8"));
+			if (contentType.contains("EUC-KR"))
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(docUrl), "EUC-KR"));
 
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(docUrl), "euc-kr"));
 			boolean start = false;
-			List<String> articleList = new ArrayList<String>();
+			String result;
+			// {
+			if (kind == 0) {
+				while ((readText = br.readLine()) != null) {
+					// <!-- article_content -->
+					if (readText.contains("<!-- article_content -->"))
+						start = true;
 
-			while ((readText = br.readLine()) != null) {
-				if (readText.contains("articleBodyContents"))
-					start = true;
+					if (readText.contains("<!-- 본문 내용 -->"))
+						start = true;
 
-				if (start) {
+					if (start) {
+						sb.append(readText);
+					}
+
+					// <!-- /article_content -->
+					if (readText.contains("<!-- /article_content -->"))
+						break;
+
+					if (readText.contains("<!-- // 본문 내용 -->"))
+						break;
+				}
+			} else {
+				while ((readText = br.readLine()) != null) {
 					sb.append(readText);
 				}
-
-				if (readText.contains("All Rights Reserved"))
-					break;
 			}
-			String result = sb.toString();
-			result = removeHtmlTag(result);
-			result = result.trim();
-
 			result = sb.toString();
-			result = removeHtmlTag(result);
-			result = result.trim();
 
 			List<String> article = new ArrayList<String>();
 			String addArticle;
@@ -78,7 +100,7 @@ public class CrawlerInWeb {
 				line++;
 			}
 			// string to extract keywords
-			String strToExtrtKwrd = readText;
+			String strToExtrtKwrd = result;
 
 			// init KeywordExtractor
 			KeywordExtractor ke = new KeywordExtractor();
@@ -88,14 +110,14 @@ public class CrawlerInWeb {
 
 			/* word-wordWeight, sentence-sentenceWeight */
 			/* save the word */
-			HashMap<String, Integer> analyze = new HashMap<String, Integer>();
+			Map<String, Integer> wordAnalyze = new HashMap<String, Integer>();
 			Map<Integer, String> sentenceAnalyze = new HashMap<Integer, String>();
 			List<String> word = new ArrayList<String>();
 
 			/* save the word - wordWeight. */
 			for (int i = 0; i < kl.size(); i++) {
 				Keyword kwrd = kl.get(i);
-				analyze.put(kwrd.getString(), kwrd.getCnt());
+				wordAnalyze.put(kwrd.getString(), kwrd.getCnt());
 				word.add(kwrd.getString());
 			}
 
@@ -104,7 +126,7 @@ public class CrawlerInWeb {
 				int sum = 0;
 				for (int total = 0; total < word.size(); total++) {
 					if (article.get(index).contains(word.get(total))) {
-						sum = sum + analyze.get(word.get(total));
+						sum = sum + wordAnalyze.get(word.get(total));
 					}
 				}
 				sentenceAnalyze.put(sum, article.get(index));
@@ -116,32 +138,25 @@ public class CrawlerInWeb {
 			String sortedSentence = sortedMap.toString();
 			sortedSentence = removeHtmlTag(sortedSentence);
 			int j = 0;
+
 			StringBuffer sortedSb = new StringBuffer();
 			BufferedReader reader2 = new BufferedReader(new StringReader(sortedSentence));
 			while ((sortedSentence = reader2.readLine()) != null) {
 				j++;
-				sortedSb.append(sortedSentence);
-				sortedResultSentence = sortedSb.toString();
+				sortedSb.append(j + " : " + sortedSentence);
+				sortedResultSentence = sortedSb.toString();	
+				content = sortedSentence;
 				sortedResultSentence = removeHtmlTag(sortedResultSentence);
 				sortedResultSentence = sortedResultSentence.trim();
+			
 				if (j == 3) {
 					break;
 				}
 			}
-
-			/* calculate a one line weight. */
-			for (int index = 0; index < line; index++) {
-				int sum = 0;
-				for (int total = 0; total < word.size(); total++) {
-					if (article.get(index).contains(word.get(total))) {
-						sum = sum + analyze.get(word.get(total));
-					}
-				}
-				sentenceAnalyze.put(sum, article.get(index));
-			}
 			br.close();
 		} catch (IOException ie) {
 			System.out.println(ie);
+
 		} catch (Exception ee) {
 			System.out.println(ee);
 		}

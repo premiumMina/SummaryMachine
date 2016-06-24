@@ -2,6 +2,8 @@ package com.summarymachine.ui.leftpanel;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,6 +14,11 @@ import javax.swing.border.TitledBorder;
 
 public class UserIdCheckPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private JTextField idField;
+
+	public String getIdField() {
+		return idField.getText();
+	}
 
 	public UserIdCheckPanel() {
 		this.setLayout(new FlowLayout());
@@ -24,13 +31,20 @@ public class UserIdCheckPanel extends JPanel {
 		idLabel.setSize(60, 20);
 		this.add(idLabel);
 
-		JTextField idField = new JTextField(15);
+		idField = new JTextField(15);
 		idField.setForeground(Color.BLACK);
 		idField.setSize(150, 25);
 		this.add(idField);
 
 		JButton idOkBtn = new JButton("Id Check");
 		idOkBtn.setSize(100, 25);
+		idOkBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// id duplication check
+			}
+		});
 		this.add(idOkBtn);
 	}
 }
