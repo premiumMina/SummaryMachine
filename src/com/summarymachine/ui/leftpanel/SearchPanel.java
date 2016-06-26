@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.summarymachine.jdbc.UserInsertDAO;
@@ -69,6 +70,7 @@ public class SearchPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/* first page */
+
 				if (documentUrlPanel.getUrlField().length() > 0) {
 					if (documentUrlPanel.getUrlField().startsWith("http")) {
 						webCrawler = new WebCrawler(documentUrlPanel.getUrlField());
@@ -79,13 +81,21 @@ public class SearchPanel extends JPanel {
 						crawlerInWeb = new CrawlerInWeb(documentUrlPanel.getUrlField(), webCrawler.getContentType(), 1);
 						summaryTextPanel.setSummaryTextField(crawlerInWeb.getSortedResultSentence());
 					}
+					userInsertDAO = new UserInsertDAO(userIdCheckPanel.getIdField(), documentUrlPanel.getUrlField(),
+							crawlerInWeb.getContent(), keywordPanel.getKeyword(), "100");
+
 				}
+				if (keywordPanel.getCheckBox().isSelected() && keywordPanel.getKeyword().length() > 0) {
+					rightPanel.getWordAccuracyPanel().setKeywordText(keywordPanel.getKeyword());
+				} else {
+					searchBtn.addActionListener(new ActionListener() {
 
-				if (keywordPanel.getCheckBox().isSelected())
-					rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
-
-				userInsertDAO = new UserInsertDAO(userIdCheckPanel.getIdField(), documentUrlPanel.getUrlField(),
-						crawlerInWeb.getContent(), keywordPanel.getKeyword(), "100");
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							JOptionPane.showMessageDialog(null, "다시 입력하세요");
+						}
+					});
+				}
 
 			}
 		});

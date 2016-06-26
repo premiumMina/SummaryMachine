@@ -114,9 +114,11 @@ public class UserInsertDAO {
 
 	public UserInsertDAO(String id, String fileFath, String content, String keyword, String accuracy) {
 		try {
-			long time = System.currentTimeMillis();
+	
+			long time = System.currentTimeMillis(); 
 			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-			date = dayTime.format(new Date(time));
+			String date = dayTime.format(new Date(time));
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost/premium", "root", "rlaxod");
 			
