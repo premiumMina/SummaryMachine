@@ -2,13 +2,9 @@ package com.summarymachine.jdbc;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-
-import com.summarymachine.ui.rightpanel.RightPanel;
-import com.summarymachine.ui.rightpanel.UserFrequencyPanel;
 
 /*
 * 연결하는 부분만 따로 만들어? 왜? 매번연결하니까 creat와 결과를 만드는것을 만든다. db는 시작할때 마다
@@ -22,7 +18,10 @@ public class UserInsertDAO {
 	private String keyword;
 	private String accuracy;
 	private String fileFath;
+	
 	static int dbLine;
+	
+	private Connection conn;
 
 	public static int getDbLine() {
 		return dbLine;
@@ -79,15 +78,20 @@ public class UserInsertDAO {
 	public void setAccuracy(String accuracy) {
 		this.accuracy = accuracy;
 	}
+	
+	public void setConnection(Connection conn) {
+		this.conn = conn;
+	}
+	
+	public Connection getConnection() {
+		return conn;
+	}
 
 	private Statement stmt = null;
-	private Connection con = null;
 
 	public UserInsertDAO() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost/premium", "root", "rlaxod");
-			stmt = (Statement) con.createStatement();
+			conn = new MySQLConn().getDBConnection();
 
 			String sql = "select * from sysinfo;";
 			ResultSet rs = null;
@@ -104,8 +108,8 @@ public class UserInsertDAO {
 			try {
 				if (stmt != null)
 					stmt.close();
-				if (con != null)
-					con.close();
+				if (conn != null)
+					conn.close();
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -117,10 +121,8 @@ public class UserInsertDAO {
 			long time = System.currentTimeMillis();
 			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 			date = dayTime.format(new Date(time));
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost/premium", "root", "rlaxod");
 			
-			stmt = (Statement) con.createStatement();
+			stmt = (Statement) conn.createStatement();
 			String sql = "INSERT INTO sysinfo (id, DATE, file_path, content, keyword, accuracy) VALUES(" + "'" + id
 					+ "','" + date + "','" + fileFath + "','" +content + "','" + keyword + "','" + accuracy
 					+ "');";
@@ -136,12 +138,11 @@ public class UserInsertDAO {
 			try {
 				if (stmt != null)
 					stmt.close();
-				if (con != null)
-					con.close();
+				if (conn != null)
+					conn.close();
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
 	}
-
 }
