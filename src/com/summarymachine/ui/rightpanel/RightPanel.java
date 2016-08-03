@@ -24,6 +24,7 @@ public class RightPanel extends JPanel {
 	private int panelWidth;
 	private int panelHeight;
 	private WordAccuracyPanel wordAccuracyPanel;
+	private WordGraphPanel wordGraphPanel;
 	private KeywordPanel keywordPanel;
 	private SummaryTextPanel summaryTextPanel;
 	private CrawlerInWeb crawlerInWeb;
@@ -40,20 +41,16 @@ public class RightPanel extends JPanel {
 		return wordAccuracyPanel;
 	}
 
+	public WordGraphPanel getWordGraphPanel() {
+		return wordGraphPanel;
+	}
+
 	public SummaryTextPanel getSummaryTextPanel() {
 		return summaryTextPanel;
 	}
 
 	public CrawlerInWeb getCrawlerInWeb() {
 		return crawlerInWeb;
-	}
-
-	public InfoPanel getInfoPanel() {
-		return infoPanel;
-	}
-
-	public void setInfoPanel(InfoPanel infoPanel) {
-		this.infoPanel = infoPanel;
 	}
 
 	public void initRightComponents() {
@@ -80,9 +77,9 @@ public class RightPanel extends JPanel {
 		summaryTextPanel.setBounds(20, 30, 500, 130);
 		rightFirstPage.add(summaryTextPanel);
 
-		WordGraphPanel wordFrequency = new WordGraphPanel();
-		wordFrequency.setBounds(20, 180, 500, 200);
-		rightFirstPage.add(wordFrequency);
+		wordGraphPanel = new WordGraphPanel();
+		wordGraphPanel.setBounds(20, 180, 500, 200);
+		rightFirstPage.add(wordGraphPanel);
 
 		wordAccuracyPanel = new WordAccuracyPanel();
 		keywordPanel = new KeywordPanel();

@@ -21,6 +21,10 @@ public class WordAccuracyPanel extends JPanel {
 		keywordText.setText(keyword);
 	}
 
+	public void setKeywordAccuracy(Object object) {
+		keywordAccuracy.setText(String.valueOf(object));
+	}
+
 	public WordAccuracyPanel() {
 		this.setLayout(null);
 		TitledBorder border = new TitledBorder("Word Accuracy");

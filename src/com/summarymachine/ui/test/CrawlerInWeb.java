@@ -23,6 +23,33 @@ public class CrawlerInWeb {
 	private String docUrl;
 	private static int line;
 	private String content;
+	private Map<String, Integer> wordAnalyze;
+	private String keyword;
+	private double accuracyValue;
+
+	public double getAccuracyValue() {
+		return accuracyValue;
+	}
+
+	public void setAccuracyValue(double accuracyValue) {
+		this.accuracyValue = accuracyValue;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public Map<String, Integer> getWordAnalyze() {
+		return wordAnalyze;
+	}
+
+	public void setWordAnalyze(Map<String, Integer> wordAnalyze) {
+		this.wordAnalyze = wordAnalyze;
+	}
 
 	public String getContent() {
 		return content;
@@ -36,7 +63,6 @@ public class CrawlerInWeb {
 		return sortedResultSentence;
 	}
 
-	/* ?? */
 	public void setSortedResultSentence(String sortedResultSentence) {
 		this.sortedResultSentence = sortedResultSentence;
 	}
@@ -49,7 +75,10 @@ public class CrawlerInWeb {
 		this.docUrl = docUrl;
 	}
 
-	public CrawlerInWeb(String docUrl, String contentType, int kind) {
+	public CrawlerInWeb() {
+	}
+
+	public void crawling(String docUrl, String contentType, int kind) {
 
 		StringBuffer sb = new StringBuffer();
 		setDocUrl(docUrl);
@@ -110,15 +139,29 @@ public class CrawlerInWeb {
 
 			/* word-wordWeight, sentence-sentenceWeight */
 			/* save the word */
-			Map<String, Integer> wordAnalyze = new HashMap<String, Integer>();
+			/* hashmap에서 .get(키)하면 값이 반환된다. */
+			wordAnalyze = new HashMap<String, Integer>();
 			Map<Integer, String> sentenceAnalyze = new HashMap<Integer, String>();
 			List<String> word = new ArrayList<String>();
 
 			/* save the word - wordWeight. */
 			for (int i = 0; i < kl.size(); i++) {
 				Keyword kwrd = kl.get(i);
-				wordAnalyze.put(kwrd.getString(), kwrd.getCnt());
-				word.add(kwrd.getString());
+				if (kwrd.getCnt() >= 2) {
+					wordAnalyze.put(kwrd.getString(), kwrd.getCnt());
+					word.add(kwrd.getString());
+				}
+			}
+
+			/*
+			 * 좌측 패널에서 입력한 키워드와 문서내 단어들과 정확도 확인하는 알고리즘
+			 */
+			int wordSize = word.size();
+
+			if (wordAnalyze.containsKey(keyword)) {
+				// true 조건
+				accuracyValue = Math.round(((double) wordAnalyze.get(keyword) / (double) wordSize) * 100);
+
 			}
 
 			/* calculate a one line weight. */
@@ -144,11 +187,10 @@ public class CrawlerInWeb {
 			while ((sortedSentence = reader2.readLine()) != null) {
 				j++;
 				sortedSb.append(j + " : " + sortedSentence);
-				sortedResultSentence = sortedSb.toString();	
+				sortedResultSentence = sortedSb.toString();
 				content = sortedSentence;
 				sortedResultSentence = removeHtmlTag(sortedResultSentence);
 				sortedResultSentence = sortedResultSentence.trim();
-			
 				if (j == 3) {
 					break;
 				}

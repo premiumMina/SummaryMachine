@@ -11,14 +11,14 @@ public class MySQLConn {
 		try {
 			/* 드라이버 로딩 : DriverManager에 등록한다. */
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/premium";
-			String username = "root";
-			String password = "rlaxod";
+			String url = "jdbc:mysql://localhost/userinfo";
+			String username = "premium";
+			String password = "premium";
 
 			conn = DriverManager.getConnection(url, username, password);
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.err.println("Database를 사용할 수 없습니다. :" + e);			
+			System.err.println("MySQLConn에서 Database를 사용할 수 없습니다. :" + e);			
 		}
 		return conn;
 	}

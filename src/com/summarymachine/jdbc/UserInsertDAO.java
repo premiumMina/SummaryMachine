@@ -1,10 +1,9 @@
 package com.summarymachine.jdbc;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
 * 연결하는 부분만 따로 만들어? 왜? 매번연결하니까 creat와 결과를 만드는것을 만든다. db는 시작할때 마다
@@ -13,23 +12,21 @@ import java.text.SimpleDateFormat;
 */
 public class UserInsertDAO {
 	private String id;
-	private String date;
+	private String searchDate;
 	private String content;
 	private String keyword;
 	private String accuracy;
 	private String fileFath;
-	
-	static int dbLine;
-	
-	private Connection conn;
+	private Statement stmt = null;
+	private Connection conn = null;
 
-	public static int getDbLine() {
-		return dbLine;
-	}
-
-	public static void setDbLine(int dbLine) {
-		UserInsertDAO.dbLine = dbLine;
-	}
+	// public static int getDbLine() {
+	// return dbLine;
+	// }
+	//
+	// public static void setDbLine(int dbLine) {
+	// UserInsertDAO.dbLine = dbLine;
+	// }
 
 	public String getFilFath() {
 		return fileFath;
@@ -48,11 +45,11 @@ public class UserInsertDAO {
 	}
 
 	public String getDate() {
-		return date;
+		return searchDate;
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.searchDate = date;
 	}
 
 	public String getContent() {
@@ -78,28 +75,18 @@ public class UserInsertDAO {
 	public void setAccuracy(String accuracy) {
 		this.accuracy = accuracy;
 	}
-	
-	public void setConnection(Connection conn) {
-		this.conn = conn;
-	}
-	
-	public Connection getConnection() {
+
+	public Connection getConn() {
 		return conn;
 	}
 
-	private Statement stmt = null;
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
 
 	public UserInsertDAO() {
 		try {
 			conn = new MySQLConn().getDBConnection();
-
-			String sql = "select * from sysinfo;";
-			ResultSet rs = null;
-			rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				dbLine++;
-			}
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -116,24 +103,16 @@ public class UserInsertDAO {
 		}
 	}
 
-	public UserInsertDAO(String id, String fileFath, String content, String keyword, String accuracy) {
+	public UserInsertDAO(String id, String fileFath, String content, String keyword, double accuracy) {
 		try {
-	
-			long time = System.currentTimeMillis(); 
-			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-<<<<<<< HEAD
-			String date = dayTime.format(new Date(time));
-			
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost/premium", "root", "rlaxod");
-=======
-			date = dayTime.format(new Date(time));
->>>>>>> 5555bfc1e0a0aa1a0584bef7c076f16bb50fd253
-			
-			stmt = (Statement) conn.createStatement();
-			String sql = "INSERT INTO sysinfo (id, DATE, file_path, content, keyword, accuracy) VALUES(" + "'" + id
-					+ "','" + date + "','" + fileFath + "','" +content + "','" + keyword + "','" + accuracy
-					+ "');";
+			Date d = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			searchDate= sdf.format(d);
+			conn= new MySQLConn().getDBConnection();
+			stmt = conn.createStatement();
+			String sql = "INSERT INTO userinfo.userinfo (userId, dateTime, fileFath, content, keyword, accuracy) VALUES("
+					+ "'" + id + "','" + searchDate + "','" + fileFath + "','" + content + "','" + keyword + "','"
+					+ accuracy + "');";
 
 			stmt.executeUpdate(sql);
 
@@ -142,7 +121,6 @@ public class UserInsertDAO {
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
-
 			try {
 				if (stmt != null)
 					stmt.close();
@@ -153,4 +131,5 @@ public class UserInsertDAO {
 			}
 		}
 	}
+
 }
