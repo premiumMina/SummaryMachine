@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import com.summarymachine.jdbc.UserInsertDAO;
+import com.summarymachine.jdbc.UserDAO;
 import com.summarymachine.ui.leftpanel.KeywordPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
 
@@ -26,7 +26,7 @@ public class RightPanel extends JPanel {
 	private CrawlerInWeb crawlerInWeb;
 	private UserFrequencyPanel userFrequencyPanel;
 	private InfoPanel helpPanel;
-	private UserInsertDAO userInsertDAO;
+	private UserDAO userInsertDAO;
 
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;

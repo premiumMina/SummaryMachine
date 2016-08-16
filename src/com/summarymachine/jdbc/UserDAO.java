@@ -10,7 +10,7 @@ import java.util.Date;
 * 연결해야대. 근데 사실 연결하는것 딱 한번만 호출..? 생성자 이 클래스 -> db연결하는 것 한클래스로 생성자로
 * 연결한다. 근데 db가 모든 곳에... 없으면 text파일로 쓸수있지. connection
 */
-public class UserInsertDAO {
+public class UserDAO {
 	private String id;
 	private String searchDate;
 	private String content;
@@ -19,6 +19,43 @@ public class UserInsertDAO {
 	private String fileFath;
 	private Statement stmt = null;
 	private Connection conn = null;
+
+	public UserDAO() {
+		conn = new MySQLConn().getDBConnection();
+	}
+
+	public void insertHistory(String id, String fileFath, String content, String keyword, double accuracy) {
+		try {
+			Date d = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			searchDate = sdf.format(d);
+			stmt = conn.createStatement();
+			
+			System.out.println(content);
+			content.replaceAll("\"", "");
+			System.out.println(content);
+			content.replaceAll("\'", "");
+			System.out.println(content);
+			
+			String sql = "INSERT INTO userinfo.userinfo (userId, dateTime, fileFath, content, keyword, accuracy) VALUES("
+					+ "'" + id + "','" + searchDate + "','" + fileFath + "','" + content + "','" + keyword + "','"
+					+ accuracy + "');";
+
+			stmt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.err.println(e);
+			}
+		}
+	}
 
 	public String getFilFath() {
 		return fileFath;
@@ -74,54 +111,6 @@ public class UserInsertDAO {
 
 	public void setConn(Connection conn) {
 		this.conn = conn;
-	}
-
-	public UserInsertDAO() {
-		try {
-			conn = new MySQLConn().getDBConnection();
-
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-	}
-
-	public UserInsertDAO(String id, String fileFath, String content, String keyword, double accuracy) {
-		try {
-			Date d = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			searchDate= sdf.format(d);
-			conn= new MySQLConn().getDBConnection();
-			stmt = conn.createStatement();
-			String sql = "INSERT INTO userinfo.userinfo (userId, dateTime, fileFath, content, keyword, accuracy) VALUES("
-					+ "'" + id + "','" + searchDate + "','" + fileFath + "','" + content + "','" + keyword + "','"
-					+ accuracy + "');";
-			
-			stmt.executeUpdate(sql);
-
-			// 테이블 페이지 만들기
-
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
 	}
 
 }

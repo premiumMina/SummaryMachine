@@ -11,13 +11,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import com.summarymachine.jdbc.MySQLConn;
-import com.summarymachine.jdbc.UserInsertDAO;
+import com.summarymachine.jdbc.UserDAO;
 
 public class UserFrequencyPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Statement stmt = null;
 	private Connection conn;
-	private UserInsertDAO userInsertDAO;
+	private UserDAO userInsertDAO;
 	Object rowData[][];
 
 	public Connection getConn() {
@@ -28,7 +28,7 @@ public class UserFrequencyPanel extends JPanel {
 		this.conn = conn;
 	}
 
-	public void setUserInsertDAO(UserInsertDAO userInsertDAO) {
+	public void setUserInsertDAO(UserDAO userInsertDAO) {
 		this.userInsertDAO = userInsertDAO;
 	}
 
