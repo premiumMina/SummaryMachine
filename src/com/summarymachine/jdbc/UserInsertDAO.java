@@ -20,14 +20,6 @@ public class UserInsertDAO {
 	private Statement stmt = null;
 	private Connection conn = null;
 
-	// public static int getDbLine() {
-	// return dbLine;
-	// }
-	//
-	// public static void setDbLine(int dbLine) {
-	// UserInsertDAO.dbLine = dbLine;
-	// }
-
 	public String getFilFath() {
 		return fileFath;
 	}

@@ -19,11 +19,9 @@ import org.snu.ids.ha.index.KeywordExtractor;
 import org.snu.ids.ha.index.KeywordList;
 
 public class CrawlerInWeb {
+	/* 내용 3줄이 들어가는 String*/
 	private String sortedResultSentence;
-	private String docUrl;
-	private static int line;
-	private String content;
-	private Map<String, Integer> wordAnalyze;
+	private Map<String, Integer> wordWeight;
 	private String keyword;
 	private double accuracyValue;
 
@@ -43,36 +41,16 @@ public class CrawlerInWeb {
 		this.keyword = keyword;
 	}
 
-	public Map<String, Integer> getWordAnalyze() {
-		return wordAnalyze;
+	public Map<String, Integer> getWordWeight() {
+		return wordWeight;
 	}
 
-	public void setWordAnalyze(Map<String, Integer> wordAnalyze) {
-		this.wordAnalyze = wordAnalyze;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
+	public void setWordWeight(Map<String, Integer> wordWeight) {
+		this.wordWeight = wordWeight;
 	}
 
 	public String getSortedResultSentence() {
 		return sortedResultSentence;
-	}
-
-	public void setSortedResultSentence(String sortedResultSentence) {
-		this.sortedResultSentence = sortedResultSentence;
-	}
-
-	public String getDocUrl() {
-		return this.docUrl;
-	}
-
-	public void setDocUrl(String docUrl) {
-		this.docUrl = docUrl;
 	}
 
 	public CrawlerInWeb() {
@@ -81,7 +59,6 @@ public class CrawlerInWeb {
 	public void crawling(String docUrl, String contentType, int kind) {
 
 		StringBuffer sb = new StringBuffer();
-		setDocUrl(docUrl);
 		try {
 			BufferedReader br = null;
 			String readText;
@@ -91,11 +68,12 @@ public class CrawlerInWeb {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(docUrl), "EUC-KR"));
 
 			boolean start = false;
-			String result;
-			// {
+			/*
+			 * kind == 0 , http~
+			 * kind == 1 , document
+			 */
 			if (kind == 0) {
 				while ((readText = br.readLine()) != null) {
-					// <!-- article_content -->
 					if (readText.contains("<!-- article_content -->"))
 						start = true;
 
@@ -106,7 +84,6 @@ public class CrawlerInWeb {
 						sb.append(readText);
 					}
 
-					// <!-- /article_content -->
 					if (readText.contains("<!-- /article_content -->"))
 						break;
 
@@ -114,41 +91,39 @@ public class CrawlerInWeb {
 						break;
 				}
 			} else {
-				while ((readText = br.readLine()) != null) {
-					sb.append(readText);
-				}
+				/* document */
 			}
-			result = sb.toString();
-
-			List<String> article = new ArrayList<String>();
+			
+			/* 본문 내용을 한 문장씩 lineArt 리스트에 넣는 작업 */
+			List<String> lineArt = new ArrayList<String>();
 			String addArticle;
-			BufferedReader reader = new BufferedReader(new StringReader(result));
-
+			BufferedReader reader = new BufferedReader(new StringReader(sb.toString()));
+			int line=0;
 			while ((addArticle = reader.readLine()) != null) {
-				article.add(addArticle);
+				lineArt.add(addArticle);
 				line++;
 			}
-			// string to extract keywords
-			String strToExtrtKwrd = result;
+			
+			/* string to extract keywords */
+			String strToExtrtKwrd = sb.toString();
 
-			// init KeywordExtractor
+			/* init KeywordExtractor */
 			KeywordExtractor ke = new KeywordExtractor();
 
-			// extract keywords
+			/* extract keywords */
 			KeywordList kl = ke.extractKeyword(strToExtrtKwrd, true);
 
-			/* word-wordWeight, sentence-sentenceWeight */
-			/* save the word */
-			/* hashmap에서 .get(키)하면 값이 반환된다. */
-			wordAnalyze = new HashMap<String, Integer>();
-			Map<Integer, String> sentenceAnalyze = new HashMap<Integer, String>();
+			/* 단어가중치 map, 문장가중치 맵 생성 */
+			wordWeight = new HashMap<String, Integer>();
+			Map<Integer, String> sentenceWeight = new HashMap<Integer, String>();
 			List<String> word = new ArrayList<String>();
 
 			/* save the word - wordWeight. */
 			for (int i = 0; i < kl.size(); i++) {
 				Keyword kwrd = kl.get(i);
-				if (kwrd.getCnt() >= 2) {
-					wordAnalyze.put(kwrd.getString(), kwrd.getCnt());
+				if (kwrd.getCnt() >= 2 && kwrd.getString().length() >= 2) {
+//					System.out.println(kwrd.getString() + ": " +kwrd.getCnt());
+					wordWeight.put(kwrd.getString(), kwrd.getCnt());
 					word.add(kwrd.getString());
 				}
 			}
@@ -158,43 +133,43 @@ public class CrawlerInWeb {
 			 */
 			int wordSize = word.size();
 
-			if (wordAnalyze.containsKey(keyword)) {
+			if (wordWeight.containsKey(keyword)) {
 				// true 조건
-				accuracyValue = Math.round(((double) wordAnalyze.get(keyword) / (double) wordSize) * 100);
+				accuracyValue = Math.round(((double) wordWeight.get(keyword) / (double) wordSize)) * 100;
 
 			}
 
-			/* calculate a one line weight. */
+			/* 단어가중치값을 적용해서 한 문장의 가중치 값을 구한다. */
 			for (int index = 0; index < line; index++) {
 				int sum = 0;
 				for (int total = 0; total < word.size(); total++) {
-					if (article.get(index).contains(word.get(total))) {
-						sum = sum + wordAnalyze.get(word.get(total));
+					if (lineArt.get(index).contains(word.get(total))) {
+						sum = sum + wordWeight.get(word.get(total));
 					}
 				}
-				sentenceAnalyze.put(sum, article.get(index));
+				/* 문장가중치 map에 가중치 값과 문장을 넣는다. */
+				sentenceWeight.put(sum, lineArt.get(index));
 			}
-
+			
+			
+			/* 문장 가중치를 값이 높은 순서대로 정렬한다. map의 내림차순 정렬. */
 			Map<Integer, String> sortedMap = new TreeMap<Integer, String>(Collections.reverseOrder());
-			sortedMap.putAll(sentenceAnalyze);
-
+			sortedMap.putAll(sentenceWeight);
 			String sortedSentence = sortedMap.toString();
-			sortedSentence = removeHtmlTag(sortedSentence);
+			sortedSentence = removeHtmlTag(sortedSentence.trim());
 			int j = 0;
-
-			StringBuffer sortedSb = new StringBuffer();
-			BufferedReader reader2 = new BufferedReader(new StringReader(sortedSentence));
-			while ((sortedSentence = reader2.readLine()) != null) {
-				j++;
-				sortedSb.append(j + " : " + sortedSentence);
-				sortedResultSentence = sortedSb.toString();
-				content = sortedSentence;
-				sortedResultSentence = removeHtmlTag(sortedResultSentence);
-				sortedResultSentence = sortedResultSentence.trim();
-				if (j == 3) {
-					break;
-				}
-			}
+			sortedResultSentence = sortedSentence;
+//			StringBuffer sortedSb = new StringBuffer();
+//			BufferedReader reader2 = new BufferedReader(new StringReader(sortedSentence));
+//			while ((sortedSentence = reader2.readLine()) != null) {
+//				j++;
+//				sortedSb.append(j + " : " + sortedSentence+"\n");
+//				sortedResultSentence = sortedSb.toString();
+//				/* 3줄만 출력되야 하므로.. */
+//				if (j == 3) {
+//					break;
+//				}
+//			}
 			br.close();
 		} catch (IOException ie) {
 			System.out.println(ie);

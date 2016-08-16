@@ -26,7 +26,7 @@ public class KeywordPanel extends JPanel {
 		TitledBorder border = new TitledBorder("Option");
 		this.setBorder(border);
 
-		keywordBtn = new JCheckBox("Key");
+		keywordBtn = new JCheckBox("Keyword");
 		keywordBtn.setSize(60, 25);
 		this.add(keywordBtn);
 

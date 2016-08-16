@@ -3,12 +3,8 @@ package com.summarymachine.ui.rightpanel;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.sound.midi.MidiDevice.Info;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
 
 import com.summarymachine.jdbc.UserInsertDAO;
 import com.summarymachine.ui.leftpanel.KeywordPanel;
@@ -29,7 +25,7 @@ public class RightPanel extends JPanel {
 	private SummaryTextPanel summaryTextPanel;
 	private CrawlerInWeb crawlerInWeb;
 	private UserFrequencyPanel userFrequencyPanel;
-	private InfoPanel infoPanel;
+	private InfoPanel helpPanel;
 	private UserInsertDAO userInsertDAO;
 
 	public RightPanel(int panelWidth, int panelHeight) {
@@ -83,7 +79,7 @@ public class RightPanel extends JPanel {
 
 		wordAccuracyPanel = new WordAccuracyPanel();
 		keywordPanel = new KeywordPanel();
-		wordAccuracyPanel.setKeywordPanel(keywordPanel);
+		wordAccuracyPanel.setKeywordText(keywordPanel.getKeyword());
 		wordAccuracyPanel.setBounds(20, 400, 300, 100);
 		rightFirstPage.add(wordAccuracyPanel);
 
@@ -94,8 +90,8 @@ public class RightPanel extends JPanel {
 		rightSecondPage.add(userFrequencyPanel);
 
 		/* 3 */
-		infoPanel = new InfoPanel();
-		infoPanel.setBounds(0, 0, panelWidth, panelHeight);
-		rightThirdPage.add(infoPanel);
+		helpPanel = new InfoPanel();
+		helpPanel.setBounds(0, 0, panelWidth, panelHeight);
+		rightThirdPage.add(helpPanel);
 	}
 }

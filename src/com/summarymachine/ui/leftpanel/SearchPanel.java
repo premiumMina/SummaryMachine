@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import com.summarymachine.jdbc.UserInsertDAO;
 import com.summarymachine.ui.rightpanel.RightPanel;
 import com.summarymachine.ui.rightpanel.SummaryTextPanel;
-import com.summarymachine.ui.rightpanel.UserFrequencyPanel;
 import com.summarymachine.ui.rightpanel.WordAccuracyPanel;
 import com.summarymachine.ui.rightpanel.WordGraphPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
@@ -94,7 +93,7 @@ public class SearchPanel extends JPanel {
 						crawlerInWeb.crawling("test.txt", webCrawler.getContentType(), 0);
 						summaryTextPanel.setSummaryTextField(crawlerInWeb.getSortedResultSentence());
 						/* 단어와 가중치를 넘긴다 */
-						wordGraphPanel.setWordAnalyze(crawlerInWeb.getWordAnalyze());
+						wordGraphPanel.setWordWeight(crawlerInWeb.getWordWeight());
 						wordGraphPanel.showGraph();
 					} else { /* not web url */
 						webCrawler = new WebCrawler(documentUrlPanel.getUrlField());
@@ -119,7 +118,7 @@ public class SearchPanel extends JPanel {
 				
 				/* 2. DB에 저장 */
 				userInsertDAO = new UserInsertDAO(userIdCheckPanel.getIdField(), documentUrlPanel.getUrlField(),
-						crawlerInWeb.getContent(), keywordPanel.getKeyword(), crawlerInWeb.getAccuracyValue());
+						crawlerInWeb.getSortedResultSentence(), keywordPanel.getKeyword(), crawlerInWeb.getAccuracyValue());
 				
 
 			}

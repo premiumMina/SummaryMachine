@@ -4,13 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
-
-import com.summarymachine.jdbc.UserInsertDAO;
 import com.summarymachine.ui.rightpanel.RightPanel;
 import com.summarymachine.ui.test.CrawlerInWeb;
 
 /**
  * 왼쪽 컴포넌트 패널
+ * 
  * @author PremiumMina
  */
 public class LeftPanel extends JPanel {
@@ -19,6 +18,7 @@ public class LeftPanel extends JPanel {
 	private int panelHeight;
 	private RightPanel rightPanel;
 	private CrawlerInWeb crawlerInWeb;
+
 	public LeftPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth + 20;
 		this.panelHeight = panelHeight;
@@ -40,7 +40,7 @@ public class LeftPanel extends JPanel {
 
 		KeywordPanel keywordPanel = new KeywordPanel();
 		this.add(keywordPanel);
-		
+
 		SearchPanel searchPanel = new SearchPanel();
 		searchPanel.setRightPanel(rightPanel);
 		searchPanel.setKeywordPanel(keywordPanel);

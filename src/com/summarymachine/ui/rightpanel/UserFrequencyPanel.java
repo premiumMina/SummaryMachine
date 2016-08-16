@@ -3,7 +3,6 @@ package com.summarymachine.ui.rightpanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -65,6 +64,9 @@ public class UserFrequencyPanel extends JPanel {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	public void showAllWord(){
+		
 	}
 
 }

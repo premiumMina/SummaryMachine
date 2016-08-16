@@ -11,8 +11,8 @@ public class SummaryTextPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextArea summaryTextField;
 	
-	public void setSummaryTextField(String content) {
-		summaryTextField.setText(content);
+	public void setSummaryTextField(String summaryText) {
+		summaryTextField.setText(summaryText);
 	}
 
 	public SummaryTextPanel() {
