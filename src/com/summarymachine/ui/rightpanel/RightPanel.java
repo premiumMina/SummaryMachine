@@ -8,7 +8,7 @@ import javax.swing.JTabbedPane;
 
 import com.summarymachine.jdbc.UserDAO;
 import com.summarymachine.ui.leftpanel.KeywordPanel;
-import com.summarymachine.ui.test.CrawlerInWeb;
+import com.summarymachine.ui.test.ContentAnalyzer;
 
 /**
  * 오른쪽 컴포넌트 패널
@@ -23,7 +23,7 @@ public class RightPanel extends JPanel {
 	private WordGraphPanel wordGraphPanel;
 	private KeywordPanel keywordPanel;
 	private SummaryTextPanel summaryTextPanel;
-	private CrawlerInWeb crawlerInWeb;
+	private ContentAnalyzer crawlerInWeb;
 	private UserFrequencyPanel userFrequencyPanel;
 	private InfoPanel helpPanel;
 	private UserDAO userInsertDAO;
@@ -45,7 +45,7 @@ public class RightPanel extends JPanel {
 		return summaryTextPanel;
 	}
 
-	public CrawlerInWeb getCrawlerInWeb() {
+	public ContentAnalyzer getCrawlerInWeb() {
 		return crawlerInWeb;
 	}
 

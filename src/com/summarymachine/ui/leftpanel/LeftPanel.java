@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
-import com.summarymachine.ui.test.CrawlerInWeb;
+import com.summarymachine.ui.test.ContentAnalyzer;
 
 /**
  * 왼쪽 컴포넌트 패널
@@ -17,7 +17,7 @@ public class LeftPanel extends JPanel {
 	private int panelWidth;
 	private int panelHeight;
 	private RightPanel rightPanel;
-	private CrawlerInWeb crawlerInWeb;
+	private ContentAnalyzer crawlerInWeb;
 
 	public LeftPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth + 20;

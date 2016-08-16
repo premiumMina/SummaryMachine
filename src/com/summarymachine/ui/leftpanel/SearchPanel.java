@@ -11,7 +11,7 @@ import com.summarymachine.ui.rightpanel.RightPanel;
 import com.summarymachine.ui.rightpanel.SummaryTextPanel;
 import com.summarymachine.ui.rightpanel.WordAccuracyPanel;
 import com.summarymachine.ui.rightpanel.WordGraphPanel;
-import com.summarymachine.ui.test.CrawlerInWeb;
+import com.summarymachine.ui.test.ContentAnalyzer;
 import com.summarymachine.ui.test.WebCrawler;
 import com.summarymachine.utils.Utils;
 
@@ -21,7 +21,7 @@ public class SearchPanel extends JPanel {
 	private SummaryTextPanel summaryTextPanel;
 	private RightPanel rightPanel;
 	private DocumentUrlPanel documentUrlPanel;
-	private CrawlerInWeb crawlerInWeb;
+	private ContentAnalyzer contentAnalyzer;
 	private WebCrawler webCrawler;
 	private UserDAO userDAO;
 	private UserIdCheckPanel userIdCheckPanel;
@@ -49,8 +49,8 @@ public class SearchPanel extends JPanel {
 		this.keywordPanel = keywordPanel;
 	}
 
-	public void setCrawlerInWeb(CrawlerInWeb crawlerInWeb) {
-		this.crawlerInWeb = crawlerInWeb;
+	public void setCrawlerInWeb(ContentAnalyzer crawlerInWeb) {
+		this.contentAnalyzer = crawlerInWeb;
 	}
 
 	public void setDocumentUrlPanel(DocumentUrlPanel documentUrlPanel) {
@@ -79,22 +79,22 @@ public class SearchPanel extends JPanel {
 
 	public SearchPanel() {
 		this.setLayout(null);
-		crawlerInWeb = new CrawlerInWeb();
+		contentAnalyzer = new ContentAnalyzer();
 		webCrawler = new WebCrawler();
 		searchBtn = new JButton("search");
 		searchBtn.setBounds(240, 10, 80, 25);
-		searchBtn.addActionListener(new SearchActionListener(crawlerInWeb));
+		searchBtn.addActionListener(new SearchActionListener(contentAnalyzer));
 		this.add(searchBtn);
 	}
 	
 	class SearchActionListener implements ActionListener {
-		private CrawlerInWeb crawlerInWeb;
+		private ContentAnalyzer contentAnalyzer;
 		private UserDAO userDAO;
 		
 		public SearchActionListener() {}
 		
-		public SearchActionListener(CrawlerInWeb crawlerInWeb) {
-			this.crawlerInWeb = crawlerInWeb;
+		public SearchActionListener(ContentAnalyzer contentAnalyzer) {
+			this.contentAnalyzer = contentAnalyzer;
 			this.userDAO = new UserDAO();
 		}
 		
@@ -105,14 +105,14 @@ public class SearchPanel extends JPanel {
 		
 		public void pushButton() {
 			if (documentUrlPanel.getUrlField().length() > 0) {
-				crawlerInWeb.setKeywordFromUserInput(keywordPanel.getKeyword());
+				contentAnalyzer.setKeywordFromUserInput(keywordPanel.getKeyword());
 				
 				if (documentUrlPanel.getUrlField().startsWith("http")) {
-					webCrawler.crawlering(documentUrlPanel.getUrlField());
-					crawlerInWeb.crawling(Utils.INPUT_FILE_PATH, webCrawler.getContentType(), Utils.WEB_DOCUMENT);
-					summaryTextPanel.setSummaryTextField(crawlerInWeb.getSortedResultSentence());
+					webCrawler.crawliing(documentUrlPanel.getUrlField());
+					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString());
+					summaryTextPanel.setSummaryTextField(contentAnalyzer.getSortedResultSentence());
 					/* 단어와 가중치를 넘긴다 */
-					wordGraphPanel.setWordWeight(crawlerInWeb.getWordWeight());
+					wordGraphPanel.setWordWeight(contentAnalyzer.getWordWeight());
 					wordGraphPanel.showGraph();
 				}
 			}
@@ -123,12 +123,12 @@ public class SearchPanel extends JPanel {
 			if (keywordPanel.getCheckBox().isSelected()) {
 				rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
 				/* 1. 키워드 정확도 전달 */
-				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(crawlerInWeb.getAccuracyValue());
+				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue());
 			}
 
 			/* 2. DB에 저장 */
 			userDAO.insertHistory(userIdCheckPanel.getIdField(), documentUrlPanel.getUrlField(),
-					crawlerInWeb.getSortedResultSentence(), keywordPanel.getKeyword(), crawlerInWeb.getAccuracyValue());
+					contentAnalyzer.getSortedResultSentence(), keywordPanel.getKeyword(), contentAnalyzer.getAccuracyValue());
 		}
 		
 		public void insertSearchHistory() {
@@ -136,12 +136,12 @@ public class SearchPanel extends JPanel {
 		}
 		
 		
-		public CrawlerInWeb getCrawlerInWeb() {
-			return crawlerInWeb;
+		public ContentAnalyzer getContentAnalyzer() {
+			return contentAnalyzer;
 		}
 
-		public void setCrawlerInWeb(CrawlerInWeb crawlerInWeb) {
-			this.crawlerInWeb = crawlerInWeb;
+		public void setContentAnalyzer(ContentAnalyzer contentAnalyzer) {
+			this.contentAnalyzer = contentAnalyzer;
 		}
 		
 	}

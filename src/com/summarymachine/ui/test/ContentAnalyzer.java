@@ -1,9 +1,5 @@
 package com.summarymachine.ui.test;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,55 +15,51 @@ import org.snu.ids.ha.index.KeywordList;
 
 import com.summarymachine.utils.Utils;
 
-public class CrawlerInWeb {
-	/* 내용 3줄이 들어가는 String*/
+public class ContentAnalyzer {
+	/* 내용 3줄이 들어가는 String */
 	private String sortedResultSentence;
 	private Map<String, Integer> wordWeightMap;
 	private String keywordFromUserInput;
 	private double accuracyValue;
 	private KeywordExtractor ke;
 
-	public CrawlerInWeb() {
+	public ContentAnalyzer() {
 		/* init KeywordExtractor */
 		ke = new KeywordExtractor();
 	}
 
-	public void crawling(String docUrl, String contentType, int kind) {
+	public void analyze(String rawCrawlingResult) {
 
-		StringBuffer sb = new StringBuffer();
 		try {
-			
-			String encoding = null;
-			if (contentType.contains("UTF-8")) encoding = "UTF-8";
-			else  encoding = "EUC-KR";
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(docUrl), encoding));
-			
 
 			List<String> contentBodyListByLine = new ArrayList<String>();
-			String readText = null;
 			
-			if (kind == Utils.WEB_DOCUMENT) {
-				boolean start = false;
-				while ((readText = br.readLine()) != null) {
-					if (readText.contains("<!-- article_content -->") || readText.contains("<!-- 본문 내용 -->"))
-						start = true;
-					
-					else if (readText.contains("<!-- /article_content -->") || readText.contains("<!-- // 본문 내용 -->"))
-						break;
-					
-					if (start) {
-						sb.append(readText);
-						contentBodyListByLine.add(readText);
-					}
-				}
+			int startIndex = 0;
+			startIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_START_FILTER);
+			
+			int endIndex = 0;
+			endIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_END_FILTER);
+			
+			
+			if(startIndex < 0 || endIndex < 0) {
+				System.out.println("본문에 해당하는 내용을 찾을 수 없습니다.");
+				System.exit(0);
+			}
+			
+			String contentBody = rawCrawlingResult.substring(startIndex, endIndex);
+			contentBody.replaceAll(Utils.NAVER_NEWS_BODY_START_FILTER, "");
+			String extractedContentBody = removeHtmlTag(contentBody);
+			
+			String[] splitedContentBody = extractedContentBody.split("\n");
+			for(String contentSegment : splitedContentBody) {
+				contentBodyListByLine.add(contentSegment);
 			}
 			
 			/* 키워드 추출 */
-			KeywordList kl = ke.extractKeyword(sb.toString(), true);
+			KeywordList kl = ke.extractKeyword(extractedContentBody, true);
 
 			/*
-			 * 단어 가중치 맵 생성
-			 * Key : 단어 / Value : 가중치
+			 * 단어 가중치 맵 생성 Key : 단어 / Value : 가중치
 			 */
 			wordWeightMap = new HashMap<String, Integer>();
 			List<String> wordListInContent = new ArrayList<String>();
@@ -92,17 +84,18 @@ public class CrawlerInWeb {
 
 			Map<Integer, String> sentenceWeightMap = new HashMap<Integer, String>();
 			/* 단어가중치값을 적용해서 한 문장의 가중치 값을 구한다. */
-			
-			for(String content : contentBodyListByLine) {
+
+			for (String content : contentBodyListByLine) {
 				int sum = 0;
-				for(String word : wordListInContent) {
-					if(content.contains(word)) {
+				for (String word : wordListInContent) {
+					if (content.contains(word)) {
 						sum = sum + wordWeightMap.get(word);
 					}
 				}
 				/* 문장가중치 map에 가중치 값과 문장을 넣는다. */
 				sentenceWeightMap.put(sum, content);
 			}
+			
 			
 			/* 문장 가중치를 값이 높은 순서대로 정렬한다. map의 내림차순 정렬. */
 			Map<Integer, String> sortedMap = new TreeMap<Integer, String>(Collections.reverseOrder());
@@ -112,23 +105,18 @@ public class CrawlerInWeb {
 			int j = 0;
 			sortedResultSentence = sortedSentence;
 
-			
-			
-//			StringBuffer sortedSb = new StringBuffer();
-//			BufferedReader reader2 = new BufferedReader(new StringReader(sortedSentence));
-//			while ((sortedSentence = reader2.readLine()) != null) {
-//				j++;
-//				sortedSb.append(j + " : " + sortedSentence+"\n");
-//				sortedResultSentence = sortedSb.toString();
-//				/* 3줄만 출력되야 하므로.. */
-//				if (j == 3) {
-//					break;
-//				}
-//			}
-			br.close();
-		} catch (IOException ie) {
-			System.out.println(ie);
-
+			// StringBuffer sortedSb = new StringBuffer();
+			// BufferedReader reader2 = new BufferedReader(new
+			// StringReader(sortedSentence));
+			// while ((sortedSentence = reader2.readLine()) != null) {
+			// j++;
+			// sortedSb.append(j + " : " + sortedSentence+"\n");
+			// sortedResultSentence = sortedSb.toString();
+			// /* 3줄만 출력되야 하므로.. */
+			// if (j == 3) {
+			// break;
+			// }
+			// }
 		} catch (Exception ee) {
 			System.out.println(ee);
 		}
@@ -160,7 +148,7 @@ public class CrawlerInWeb {
 
 		return content;
 	}
-	
+
 	public double getAccuracyValue() {
 		return accuracyValue;
 	}
