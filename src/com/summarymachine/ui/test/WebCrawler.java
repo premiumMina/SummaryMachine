@@ -26,7 +26,10 @@ public class WebCrawler {
 		this.webUrl = webUrl;
 	}
 
-	public WebCrawler(String webUrl) {
+	public WebCrawler(){
+		
+	}
+	public void crawlering(String webUrl) {
 
 		URL url = null;
 		try {

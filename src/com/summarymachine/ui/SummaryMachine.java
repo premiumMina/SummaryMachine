@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import com.summarymachine.jdbc.MySQLConn;
-import com.summarymachine.jdbc.UserInsertDAO;
 import com.summarymachine.ui.leftpanel.LeftPanel;
 import com.summarymachine.ui.rightpanel.RightPanel;
 

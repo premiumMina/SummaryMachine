@@ -105,7 +105,7 @@ public class UserInsertDAO {
 			String sql = "INSERT INTO userinfo.userinfo (userId, dateTime, fileFath, content, keyword, accuracy) VALUES("
 					+ "'" + id + "','" + searchDate + "','" + fileFath + "','" + content + "','" + keyword + "','"
 					+ accuracy + "');";
-
+			
 			stmt.executeUpdate(sql);
 
 			// 테이블 페이지 만들기

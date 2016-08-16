@@ -24,6 +24,7 @@ public class CrawlerInWeb {
 	private Map<String, Integer> wordWeight;
 	private String keyword;
 	private double accuracyValue;
+	private KeywordExtractor ke;
 
 	public double getAccuracyValue() {
 		return accuracyValue;
@@ -54,6 +55,7 @@ public class CrawlerInWeb {
 	}
 
 	public CrawlerInWeb() {
+		ke = new KeywordExtractor();
 	}
 
 	public void crawling(String docUrl, String contentType, int kind) {
@@ -108,7 +110,6 @@ public class CrawlerInWeb {
 			String strToExtrtKwrd = sb.toString();
 
 			/* init KeywordExtractor */
-			KeywordExtractor ke = new KeywordExtractor();
 
 			/* extract keywords */
 			KeywordList kl = ke.extractKeyword(strToExtrtKwrd, true);
