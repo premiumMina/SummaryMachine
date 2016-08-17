@@ -1,4 +1,4 @@
-package com.summarymachine.ui.leftpanel;
+package com.premiummina.summarymachine.ui.leftpanel;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -12,13 +12,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+/**
+ * 아이디 입력 패널
+ * 
+ * @author premiumMina
+ * created on 2016. 7. 23.
+ */
 public class UserIdCheckPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField idField;
-
-	public String getIdField() {
-		return idField.getText();
-	}
 
 	public UserIdCheckPanel() {
 		this.setLayout(new FlowLayout());
@@ -42,9 +44,17 @@ public class UserIdCheckPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// id duplication check
+				/* 
+				 * 아이디 중복 검사 설정
+				 * 현재는 아이디와 날짜가 PK여서 필요가 없음
+				 * 2016. 8. 17.
+				 */
 			}
 		});
 		this.add(idOkBtn);
+	}
+	
+	public String getIdField() {
+		return idField.getText();
 	}
 }

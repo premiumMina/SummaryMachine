@@ -1,4 +1,4 @@
-package com.summarymachine.ui.rightpanel;
+package com.premiummina.summarymachine.ui.rightpanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -10,29 +10,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import com.summarymachine.jdbc.MySQLConn;
-import com.summarymachine.jdbc.UserDAO;
+import com.premiummina.summarymachine.jdbc.MySQLConn;
+import com.premiummina.summarymachine.jdbc.UserDAO;
 
-public class UserFrequencyPanel extends JPanel {
+/**
+ * 사용자 히스토리 출력 패널
+ * 
+ * @author premiumMina
+ * created on 2016. 8. 2.
+ */
+public class UserHistoryPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Statement stmt = null;
 	private Connection conn;
-	private UserDAO userInsertDAO;
+	private UserDAO userDAO;
 	Object rowData[][];
-
-	public Connection getConn() {
-		return conn;
-	}
-
-	public void setConn(Connection conn) {
-		this.conn = conn;
-	}
-
-	public void setUserInsertDAO(UserDAO userInsertDAO) {
-		this.userInsertDAO = userInsertDAO;
-	}
-
-	public UserFrequencyPanel() {
+	
+	public UserHistoryPanel() {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(450, 150));
 		try {
@@ -65,8 +59,24 @@ public class UserFrequencyPanel extends JPanel {
 			System.out.println(e);
 		}
 	}
+	
 	public void showAllWord(){
 		
 	}
+	
+	public Connection getConn() {
+		return conn;
+	}
 
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+
+	public void setUserDAO(UserDAO userInsertDAO) {
+		this.userDAO = userInsertDAO;
+	}
+	
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
 }

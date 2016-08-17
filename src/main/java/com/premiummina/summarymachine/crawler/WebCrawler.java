@@ -1,10 +1,16 @@
-package com.summarymachine.ui.test;
+package com.premiummina.summarymachine.crawler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * 웹 페이지에서 문서를 크롤링한다.
+ * 
+ * @author premiumMina
+ * created on 2016. 7. 20.
+ */
 public class WebCrawler {
 	private String contentType;
 	private String webUrl;

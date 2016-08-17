@@ -1,4 +1,4 @@
-package com.summarymachine.ui.test;
+package com.premiummina.summarymachine.analyzer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,10 +13,15 @@ import org.snu.ids.ha.index.Keyword;
 import org.snu.ids.ha.index.KeywordExtractor;
 import org.snu.ids.ha.index.KeywordList;
 
-import com.summarymachine.utils.Utils;
+import com.premiummina.summarymachine.utils.Utils;
 
+/**
+ * 내용을 분석한다.
+ * 
+ * @author premiumMina
+ * created on 2016. 7. 22.
+ */
 public class ContentAnalyzer {
-	/* 내용 3줄이 들어가는 String */
 	private String sortedResultSentence;
 	private Map<String, Integer> wordWeightMap;
 	private String keywordFromUserInput;
@@ -24,8 +29,8 @@ public class ContentAnalyzer {
 	private KeywordExtractor ke;
 
 	public ContentAnalyzer() {
-		/* init KeywordExtractor */
 		ke = new KeywordExtractor();
+		sortedResultSentence = "";
 	}
 
 	public void analyze(String rawCrawlingResult) {
@@ -83,8 +88,8 @@ public class ContentAnalyzer {
 			}
 
 			Map<Integer, String> sentenceWeightMap = new HashMap<Integer, String>();
+			
 			/* 단어가중치값을 적용해서 한 문장의 가중치 값을 구한다. */
-
 			for (String content : contentBodyListByLine) {
 				int sum = 0;
 				for (String word : wordListInContent) {
@@ -96,27 +101,20 @@ public class ContentAnalyzer {
 				sentenceWeightMap.put(sum, content);
 			}
 			
-			
 			/* 문장 가중치를 값이 높은 순서대로 정렬한다. map의 내림차순 정렬. */
 			Map<Integer, String> sortedMap = new TreeMap<Integer, String>(Collections.reverseOrder());
 			sortedMap.putAll(sentenceWeightMap);
 			String sortedSentence = sortedMap.toString();
 			sortedSentence = removeHtmlTag(sortedSentence.trim());
-			int j = 0;
-			sortedResultSentence = sortedSentence;
+			
+			String[] splitedResultSentence = sortedSentence.split("\n");
+			
+			for(int index=0; index < 3 ; index++) {
+				sortedSentence = splitedResultSentence[index] + "\n";
+				sortedResultSentence = sortedResultSentence + sortedSentence;
+			}
+			
 
-			// StringBuffer sortedSb = new StringBuffer();
-			// BufferedReader reader2 = new BufferedReader(new
-			// StringReader(sortedSentence));
-			// while ((sortedSentence = reader2.readLine()) != null) {
-			// j++;
-			// sortedSb.append(j + " : " + sortedSentence+"\n");
-			// sortedResultSentence = sortedSb.toString();
-			// /* 3줄만 출력되야 하므로.. */
-			// if (j == 3) {
-			// break;
-			// }
-			// }
 		} catch (Exception ee) {
 			System.out.println(ee);
 		}

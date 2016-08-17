@@ -1,15 +1,16 @@
-package com.summarymachine.jdbc;
+package com.premiummina.summarymachine.jdbc;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/*
-* 연결하는 부분만 따로 만들어? 왜? 매번연결하니까 creat와 결과를 만드는것을 만든다. db는 시작할때 마다
-* 연결해야대. 근데 사실 연결하는것 딱 한번만 호출..? 생성자 이 클래스 -> db연결하는 것 한클래스로 생성자로
-* 연결한다. 근데 db가 모든 곳에... 없으면 text파일로 쓸수있지. connection
-*/
+/**
+ * 데이터 엑세스 오브젝트(DAO)
+ * 
+ * @author premiumMina
+ * created on 2016. 8. 1.
+ */
 public class UserDAO {
 	private String id;
 	private String searchDate;
@@ -23,7 +24,13 @@ public class UserDAO {
 	public UserDAO() {
 		conn = new MySQLConn().getDBConnection();
 	}
-
+	
+	/**
+	 * 사용자가 검색한 히스토리를 데이터베이스에 저장한다.
+	 * 
+	 * @author premiumMina
+	 * created on 2016. 7. 22.
+	 */
 	public void insertHistory(String id, String fileFath, String content, String keyword, double accuracy) {
 		try {
 			Date d = new Date();
@@ -112,5 +119,4 @@ public class UserDAO {
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
-
 }

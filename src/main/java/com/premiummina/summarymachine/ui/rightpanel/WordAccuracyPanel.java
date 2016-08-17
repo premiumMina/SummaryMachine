@@ -1,22 +1,20 @@
-package com.summarymachine.ui.rightpanel;
+package com.premiummina.summarymachine.ui.rightpanel;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+/**
+ * 키워드와 내용의 정확도 분석 패널
+ * 
+ * @author premiumMina
+ * created on 2016. 8. 5.
+ */
 public class WordAccuracyPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextArea keywordText;
 	private JTextArea keywordAccuracy;
-
-	public void setKeywordText(String keyword) {
-		keywordText.setText(keyword);
-	}
-
-	public void setKeywordAccuracy(Object object) {
-		keywordAccuracy.setText(String.valueOf(object));
-	}
 
 	public WordAccuracyPanel() {
 		this.setLayout(null);
@@ -40,6 +38,13 @@ public class WordAccuracyPanel extends JPanel {
 		keywordAccuracy.setBounds(100, 60, 100, 20);
 		keywordAccuracy.setEditable(false);
 		this.add(keywordAccuracy);
+	}
+	
+	public void setKeywordText(String keyword) {
+		keywordText.setText(keyword);
+	}
 
+	public void setKeywordAccuracy(Object object) {
+		keywordAccuracy.setText(String.valueOf(object));
 	}
 }

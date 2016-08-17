@@ -1,4 +1,4 @@
-package com.summarymachine.ui.rightpanel;
+package com.premiummina.summarymachine.ui.rightpanel;
 
 import java.awt.GridLayout;
 
@@ -6,6 +6,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+/**
+ * 세 번째 패널(개발자 소개 탭)
+ * 
+ * @author premiumMina
+ * created on 2016. 8. 13.
+ */
 public class InfoPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +27,5 @@ public class InfoPanel extends JPanel {
 		JTextArea developerText = new JTextArea();
 		developerText.setBorder(developerBorder);
 		add(developerText);
-
 	}
 }

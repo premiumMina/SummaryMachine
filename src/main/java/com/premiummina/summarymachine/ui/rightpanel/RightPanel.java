@@ -1,4 +1,4 @@
-package com.summarymachine.ui.rightpanel;
+package com.premiummina.summarymachine.ui.rightpanel;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -6,14 +6,15 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import com.summarymachine.jdbc.UserDAO;
-import com.summarymachine.ui.leftpanel.KeywordPanel;
-import com.summarymachine.ui.test.ContentAnalyzer;
+import com.premiummina.summarymachine.analyzer.ContentAnalyzer;
+import com.premiummina.summarymachine.jdbc.UserDAO;
+import com.premiummina.summarymachine.ui.leftpanel.KeywordPanel;
 
 /**
- * 오른쪽 컴포넌트 패널
+ * 우측 컴포넌트 패널
  * 
- * @author PremiumMina
+ * @author premiumMina
+ * created on 2016. 8. 2.
  */
 public class RightPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -24,29 +25,13 @@ public class RightPanel extends JPanel {
 	private KeywordPanel keywordPanel;
 	private SummaryTextPanel summaryTextPanel;
 	private ContentAnalyzer crawlerInWeb;
-	private UserFrequencyPanel userFrequencyPanel;
+	private UserHistoryPanel userHistoryPanel;
 	private InfoPanel helpPanel;
 	private UserDAO userInsertDAO;
 
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
 		this.panelHeight = panelHeight;
-	}
-
-	public WordAccuracyPanel getWordAccuracyPanel() {
-		return wordAccuracyPanel;
-	}
-
-	public WordGraphPanel getWordGraphPanel() {
-		return wordGraphPanel;
-	}
-
-	public SummaryTextPanel getSummaryTextPanel() {
-		return summaryTextPanel;
-	}
-
-	public ContentAnalyzer getCrawlerInWeb() {
-		return crawlerInWeb;
 	}
 
 	public void initRightComponents() {
@@ -59,7 +44,6 @@ public class RightPanel extends JPanel {
 		rightSecondPage.setLayout(null);
 		JPanel rightThirdPage = new JPanel();
 		rightThirdPage.setLayout(null);
-		// rightThirdPage
 
 		JTabbedPane jtb = new JTabbedPane();
 		jtb.add("Analyzer", rightFirstPage);
@@ -68,7 +52,7 @@ public class RightPanel extends JPanel {
 		jtb.setBounds(0, 0, panelWidth, 20);
 		this.add(jtb);
 
-		/* 1 */
+		/* 첫 번째 탭 */
 		summaryTextPanel = new SummaryTextPanel();
 		summaryTextPanel.setBounds(20, 30, 500, 130);
 		rightFirstPage.add(summaryTextPanel);
@@ -83,15 +67,31 @@ public class RightPanel extends JPanel {
 		wordAccuracyPanel.setBounds(20, 400, 300, 100);
 		rightFirstPage.add(wordAccuracyPanel);
 
-		/* 2 */
-		userFrequencyPanel = new UserFrequencyPanel();
-		userFrequencyPanel.setBounds(0, 0, panelWidth, panelHeight);
-		userFrequencyPanel.setUserInsertDAO(userInsertDAO);
-		rightSecondPage.add(userFrequencyPanel);
-
-		/* 3 */
+		/* 두 번째 탭 */
+		userHistoryPanel = new UserHistoryPanel();
+		userHistoryPanel.setBounds(0, 0, panelWidth, panelHeight);
+		userHistoryPanel.setUserDAO(userInsertDAO);
+		rightSecondPage.add(userHistoryPanel);
+		
+		/* 세 번째 탭 */
 		helpPanel = new InfoPanel();
 		helpPanel.setBounds(0, 0, panelWidth, panelHeight);
 		rightThirdPage.add(helpPanel);
+	}
+	
+	public WordAccuracyPanel getWordAccuracyPanel() {
+		return wordAccuracyPanel;
+	}
+
+	public WordGraphPanel getWordGraphPanel() {
+		return wordGraphPanel;
+	}
+
+	public SummaryTextPanel getSummaryTextPanel() {
+		return summaryTextPanel;
+	}
+
+	public ContentAnalyzer getCrawlerInWeb() {
+		return crawlerInWeb;
 	}
 }

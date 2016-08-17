@@ -1,9 +1,15 @@
-package com.summarymachine.jdbc;
+package com.premiummina.summarymachine.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * MySQL 커넥션 연결
+ * 
+ * @author premiumMina
+ * created on 2016. 7. 29.
+ */
 public class MySQLConn {
 	private Connection conn;
 	

@@ -1,4 +1,4 @@
-package com.summarymachine.ui.leftpanel;
+package com.premiummina.summarymachine.ui.leftpanel;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -13,7 +13,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-public class DocumentUrlPanel extends JPanel {
+/**
+ * 웹 페이지의 주소를 입력하는 패널
+ * 
+ * @author premiumMina
+ * created on 2016. 7. 13.
+ */
+public class FilePathPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField urlField;
 	private JButton upLoadBtn;
@@ -25,7 +31,7 @@ public class DocumentUrlPanel extends JPanel {
 		return urlField.getText();
 	}
 	
-	public DocumentUrlPanel() {
+	public FilePathPanel() {
 		this.setLayout(new FlowLayout());
 		TitledBorder border = new TitledBorder("File Path");
 		this.setBorder(border);
@@ -46,7 +52,7 @@ public class DocumentUrlPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileSelector = new JFileChooser();
-				fileSelector.showOpenDialog(DocumentUrlPanel.this);
+				fileSelector.showOpenDialog(FilePathPanel.this);
 
 				if (fileSelector.getSelectedFile().exists()) {
 					urlField.setText(fileSelector.getSelectedFile().getName());
@@ -56,5 +62,4 @@ public class DocumentUrlPanel extends JPanel {
 		});
 		this.add(upLoadBtn);
 	}
-
 }

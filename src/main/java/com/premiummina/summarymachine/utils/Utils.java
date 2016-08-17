@@ -1,5 +1,11 @@
-package com.summarymachine.utils;
+package com.premiummina.summarymachine.utils;
 
+/**
+ * 프로그램 유틸리티 클래스
+ * 
+ * @author premiumMina
+ * created on 2016. 8. 10.
+ */
 public class Utils {
 	public static final int WEB_DOCUMENT = 0;
 	

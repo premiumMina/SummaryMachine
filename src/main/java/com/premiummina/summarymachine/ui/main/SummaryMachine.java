@@ -1,4 +1,4 @@
-package com.summarymachine.ui;
+package com.premiummina.summarymachine.ui.main;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -7,13 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import com.summarymachine.jdbc.MySQLConn;
-import com.summarymachine.ui.leftpanel.LeftPanel;
-import com.summarymachine.ui.rightpanel.RightPanel;
+import com.premiummina.summarymachine.jdbc.MySQLConn;
+import com.premiummina.summarymachine.ui.leftpanel.LeftPanel;
+import com.premiummina.summarymachine.ui.rightpanel.RightPanel;
 
 /**
- * 메인 프레임
- * @author PremiumMina
+ * 메인 프레임 및 프로그램 시작
+ * 
+ * @author premiumMina
+ * created on 2016. 6. 30.
  */
 public class SummaryMachine extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +59,7 @@ public class SummaryMachine extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new MySQLConn();
+		new MySQLConn(); /* 사용자의 히스토리를 출력하기 위해 미리 호출한다. */
 		new SummaryMachine();
 	}
 }
