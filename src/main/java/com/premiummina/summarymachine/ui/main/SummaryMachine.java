@@ -19,8 +19,8 @@ import com.premiummina.summarymachine.ui.rightpanel.RightPanel;
  */
 public class SummaryMachine extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private final int screenWidth = 900;
-	private final int screenHeight = 600;
+	private final int screenWidth = 1000;
+	private final int screenHeight = 1000;
 
 
 	public SummaryMachine() {

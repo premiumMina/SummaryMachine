@@ -3,10 +3,15 @@ package com.premiummina.summarymachine.ui.rightpanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -17,7 +22,7 @@ import javax.swing.border.TitledBorder;
  */
 public class WordGraphPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private Map<String, Integer> wordWeight;
+	private Map<String, Integer> wordWeightMap;
 	private int count = 0;
 	private String[] resultKey = new String[10];
 	private Integer[] resultValue = new Integer[10];
@@ -28,16 +33,20 @@ public class WordGraphPanel extends JPanel {
 		TitledBorder border = new TitledBorder("Word Frequency");
 		setBorder(border);
 		setVisible(true);
+		
+		for (int index = 0; index < 10; index++) {
+			resultKey[index] = new String();
+		}
 	}
 
 	/* 단어와 가중치 저장하는 배열 만들기 */
 	public void showGraph() {
 		/* 단어 가중치 큰 순서대로 정렬해야 함.*/
-		Iterator<String> iterator = wordWeight.keySet().iterator();
+		Iterator<String> iterator = WordGraphPanel.sortMap(wordWeightMap).iterator();
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			resultKey[count] = key;
-			resultValue[count] = wordWeight.get(key);
+			resultValue[count] = wordWeightMap.get(key);
 			count++;
 			if (count == 10) {
 				break;
@@ -68,12 +77,28 @@ public class WordGraphPanel extends JPanel {
 
 		}
 	}
-	
-	public Map<String, Integer> getWordWeight() {
-		return wordWeight;
+
+	private static List sortMap(final Map map) {
+		List<String> sortedWordList = new ArrayList();
+		sortedWordList.addAll(map.keySet());
+
+		Collections.sort(sortedWordList, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				Object v1 = map.get(o1);
+				Object v2 = map.get(o2);
+
+				return ((Comparable) v1).compareTo(v2);
+			}
+		});
+		Collections.reverse(sortedWordList);
+		return sortedWordList;
 	}
 
-	public void setWordWeight(Map<String, Integer> wordWeight) {
-		this.wordWeight = wordWeight;
+	public Map<String, Integer> getWordWeightMap() {
+		return wordWeightMap;
+	}
+
+	public void setWordWeightMap(Map<String, Integer> wordWeightMap) {
+		this.wordWeightMap = wordWeightMap;
 	}
 }

@@ -2,10 +2,11 @@ package com.premiummina.summarymachine.analyzer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +19,7 @@ import com.premiummina.summarymachine.utils.Utils;
 /**
  * 내용을 분석한다.
  * 
- * @author premiumMina
+ * @author premiumMina 
  * created on 2016. 7. 22.
  */
 public class ContentAnalyzer {
@@ -62,14 +63,14 @@ public class ContentAnalyzer {
 			
 			/* 키워드 추출 */
 			KeywordList kl = ke.extractKeyword(extractedContentBody, true);
-
+			
 			/*
 			 * 단어 가중치 맵 생성 Key : 단어 / Value : 가중치
 			 */
 			wordWeightMap = new HashMap<String, Integer>();
 			List<String> wordListInContent = new ArrayList<String>();
 
-			/* save the word - wordWeight. */
+			/* 단어와 가중치를 부여한다. */
 			for (int i = 0; i < kl.size(); i++) {
 				Keyword kwrd = kl.get(i);
 				if (kwrd.getCnt() >= 2 && kwrd.getString().length() >= 2) {
@@ -84,12 +85,16 @@ public class ContentAnalyzer {
 			int numOfWords = wordListInContent.size();
 
 			if (wordWeightMap.containsKey(this.keywordFromUserInput)) {
-				accuracyValue = Math.round(((double) wordWeightMap.get(this.keywordFromUserInput) / (double) numOfWords)) * 100;
+				int tmp = wordWeightMap.get(this.keywordFromUserInput);
+				accuracyValue = ((double)tmp / (double) numOfWords) * 100;
 			}
 
-			Map<Integer, String> sentenceWeightMap = new HashMap<Integer, String>();
-			
-			/* 단어가중치값을 적용해서 한 문장의 가중치 값을 구한다. */
+			/*
+			 * 문장 가중치 맵 생성 Key : 문장 / Value : 가중치
+			 */
+			Map<String, Integer> sentenceWeightMap = new HashMap<String, Integer>();
+
+			/* 단어의 가중치 값을 적용해서 한 문장의 가중치 값을 구한다. */
 			for (String content : contentBodyListByLine) {
 				int sum = 0;
 				for (String word : wordListInContent) {
@@ -97,28 +102,37 @@ public class ContentAnalyzer {
 						sum = sum + wordWeightMap.get(word);
 					}
 				}
-				/* 문장가중치 map에 가중치 값과 문장을 넣는다. */
-				sentenceWeightMap.put(sum, content);
+				sentenceWeightMap.put(content, sum);
 			}
-			
-			/* 문장 가중치를 값이 높은 순서대로 정렬한다. map의 내림차순 정렬. */
-			Map<Integer, String> sortedMap = new TreeMap<Integer, String>(Collections.reverseOrder());
-			sortedMap.putAll(sentenceWeightMap);
-			String sortedSentence = sortedMap.toString();
-			sortedSentence = removeHtmlTag(sortedSentence.trim());
-			
-			String[] splitedResultSentence = sortedSentence.split("\n");
-			
-			for(int index=0; index < 3 ; index++) {
-				sortedSentence = splitedResultSentence[index] + "\n";
-				sortedResultSentence = sortedResultSentence + sortedSentence;
+
+			/* 문장 가중치 맵을 가중치가 높은 순서대로 정렬한다. */
+			Iterator it = ContentAnalyzer.sortMap(sentenceWeightMap).iterator();
+			for (int index = 1; index < 4; index++) {
+				String sentence = index + ". " + (String) it.next() + "\n";
+				sortedResultSentence = sortedResultSentence + sentence;
 			}
-			
+			System.out.println(wordWeightMap);
 
 		} catch (Exception ee) {
 			System.out.println(ee);
 		}
 
+	}
+
+	private static List sortMap(final Map map) {
+		List<String> sortedSentenceList = new ArrayList();
+		sortedSentenceList.addAll(map.keySet());
+
+		Collections.sort(sortedSentenceList, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				Object v1 = map.get(o1);
+				Object v2 = map.get(o2);
+
+				return ((Comparable) v1).compareTo(v2);
+			}
+		});
+		Collections.reverse(sortedSentenceList);
+		return sortedSentenceList;
 	}
 
 	private static String removeHtmlTag(String content) {
@@ -163,12 +177,12 @@ public class ContentAnalyzer {
 		this.keywordFromUserInput = keywordFromUserInput;
 	}
 
-	public Map<String, Integer> getWordWeight() {
+	public Map<String, Integer> getWordWeightMap() {
 		return wordWeightMap;
 	}
 
-	public void setWordWeight(Map<String, Integer> wordWeight) {
-		this.wordWeightMap = wordWeight;
+	public void setWordWeight(Map<String, Integer> wordWeightMap) {
+		this.wordWeightMap = wordWeightMap;
 	}
 
 	public String getSortedResultSentence() {

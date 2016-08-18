@@ -54,17 +54,17 @@ public class RightPanel extends JPanel {
 
 		/* 첫 번째 탭 */
 		summaryTextPanel = new SummaryTextPanel();
-		summaryTextPanel.setBounds(20, 30, 500, 130);
+		summaryTextPanel.setBounds(20, 30, 550, 200);
 		rightFirstPage.add(summaryTextPanel);
 
 		wordGraphPanel = new WordGraphPanel();
-		wordGraphPanel.setBounds(20, 180, 500, 200);
+		wordGraphPanel.setBounds(20, 270, 550, 400);
 		rightFirstPage.add(wordGraphPanel);
 
 		wordAccuracyPanel = new WordAccuracyPanel();
 		keywordPanel = new KeywordPanel();
 		wordAccuracyPanel.setKeywordText(keywordPanel.getKeyword());
-		wordAccuracyPanel.setBounds(20, 400, 300, 100);
+		wordAccuracyPanel.setBounds(20, 700, 550, 100);
 		rightFirstPage.add(wordAccuracyPanel);
 
 		/* 두 번째 탭 */

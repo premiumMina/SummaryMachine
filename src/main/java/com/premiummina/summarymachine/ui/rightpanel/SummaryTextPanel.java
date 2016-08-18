@@ -27,6 +27,7 @@ public class SummaryTextPanel extends JPanel {
 		this.setBorder(border);
 
 		summaryTextField = new JTextArea(5, 10);
+		summaryTextField.setLineWrap(true);
 		summaryTextField.setEditable(false);
 		this.add(summaryTextField);
 		

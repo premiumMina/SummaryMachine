@@ -69,7 +69,7 @@ public class SearchPanel extends JPanel {
 					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString());
 					summaryTextPanel.setSummaryTextField(contentAnalyzer.getSortedResultSentence());
 					/* 단어와 가중치를 넘긴다 */
-					wordGraphPanel.setWordWeight(contentAnalyzer.getWordWeight());
+					wordGraphPanel.setWordWeightMap(contentAnalyzer.getWordWeightMap());
 					wordGraphPanel.showGraph();
 				}
 			}
