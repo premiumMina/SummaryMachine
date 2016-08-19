@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.premiummina.summarymachine.ui.rightpanel.UserHistoryPanel;
+
 /**
  * MySQL 커넥션 연결
  * 
@@ -12,7 +14,6 @@ import java.sql.SQLException;
  */
 public class MySQLConn {
 	private Connection conn;
-	
 	public Connection getDBConnection() {
 		try {
 			/* 드라이버 로딩 : DriverManager에 등록한다. */
@@ -22,9 +23,9 @@ public class MySQLConn {
 			String password = "root";
 
 			conn = DriverManager.getConnection(url, username, password);
-			
+
 		} catch (ClassNotFoundException | SQLException e) {
-			System.err.println("MySQLConn에서 Database를 사용할 수 없습니다. :" + e);			
+			System.err.println("MySQLConn에서 Database를 사용할 수 없습니다. :" + e);
 		}
 		return conn;
 	}

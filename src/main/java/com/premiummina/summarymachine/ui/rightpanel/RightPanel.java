@@ -27,7 +27,7 @@ public class RightPanel extends JPanel {
 	private ContentAnalyzer crawlerInWeb;
 	private UserHistoryPanel userHistoryPanel;
 	private InfoPanel helpPanel;
-	private UserDAO userInsertDAO;
+	private UserDAO userDAO;
 
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
@@ -70,7 +70,7 @@ public class RightPanel extends JPanel {
 		/* 두 번째 탭 */
 		userHistoryPanel = new UserHistoryPanel();
 		userHistoryPanel.setBounds(0, 0, panelWidth, panelHeight);
-		userHistoryPanel.setUserDAO(userInsertDAO);
+		userHistoryPanel.setUserDAO(userDAO);
 		rightSecondPage.add(userHistoryPanel);
 		
 		/* 세 번째 탭 */

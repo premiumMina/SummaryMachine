@@ -81,16 +81,15 @@ public class SearchPanel extends JPanel {
 				rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
 				/* 1. 키워드 정확도 전달 */
 				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue());
+				insertSearchHistory();
 			}
-
-			/* 2. DB에 저장 */
-			userDAO.insertHistory(userIdCheckPanel.getIdField(), filePathPanel.getUrlField(),
-					contentAnalyzer.getSortedResultSentence(), keywordPanel.getKeyword(),
-					contentAnalyzer.getAccuracyValue());
+			
 		}
 
 		public void insertSearchHistory() {
-
+			userDAO.insertHistory(userIdCheckPanel.getIdField(), filePathPanel.getUrlField(),
+					contentAnalyzer.getSortedResultSentence(), keywordPanel.getKeyword(),
+					contentAnalyzer.getAccuracyValue());
 		}
 
 		public ContentAnalyzer getContentAnalyzer() {

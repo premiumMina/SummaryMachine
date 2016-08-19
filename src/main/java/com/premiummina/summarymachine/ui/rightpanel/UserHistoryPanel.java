@@ -9,6 +9,7 @@ import java.sql.Statement;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 import com.premiummina.summarymachine.jdbc.MySQLConn;
 import com.premiummina.summarymachine.jdbc.UserDAO;
@@ -25,10 +26,12 @@ public class UserHistoryPanel extends JPanel {
 	private Connection conn;
 	private UserDAO userDAO;
 	Object rowData[][];
-	
-	public UserHistoryPanel() {
+	public UserHistoryPanel(){
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(450, 150));
+		historyChart();
+	}
+	public void historyChart() {
 		try {
 			conn = new MySQLConn().getDBConnection();
 			stmt = (Statement) conn.createStatement();
@@ -41,27 +44,25 @@ public class UserHistoryPanel extends JPanel {
 			/* 행에 데이터베이스에 있는 줄 만큼의 값을 넣어야 하는데... */
 			String[][] input = new String[10][6];
 			while (rs.next()) {
-				input[count][0] = rs.getString("userId");
-				input[count][1] = rs.getString("dateTime");
-				input[count][2] = rs.getString("fileFath");
+				input[count][0] = rs.getString("userid");
+				input[count][1] = rs.getString("searchdate");
+				input[count][2] = rs.getString("filepath");
 				input[count][3] = rs.getString("content");
 				input[count][4] = rs.getString("keyword");
 				input[count][5] = rs.getString("accuracy");
 				count++;
 
-				final String columnNames[] = { "UserID", "Date", "File Fath", "Content", "Keyword", "Accuracy" };
-
+				final String columnNames[] = { "UserID", "Date", "File Path", "Content", "Keyword", "Accuracy" };
 				final JTable table = new JTable(input, columnNames);
 				JScrollPane scrollPane = new JScrollPane(table);
 				add(scrollPane, BorderLayout.CENTER);
+				
 			}
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	}
-	
-	public void showAllWord(){
-		
 	}
 	
 	public Connection getConn() {
