@@ -13,11 +13,11 @@ import java.util.Date;
  */
 public class UserDAO {
 	private String id;
-	private String searchDate;
+	private String searchdate;
 	private String content;
 	private String keyword;
 	private String accuracy;
-	private String fileFath;
+	private String filepath;
 	private Statement stmt = null;
 	private Connection conn = null;
 
@@ -31,11 +31,11 @@ public class UserDAO {
 	 * @author premiumMina
 	 * created on 2016. 7. 22.
 	 */
-	public void insertHistory(String id, String fileFath, String content, String keyword, double accuracy) {
+	public void insertHistory(String id, String filepath, String content, String keyword, double accuracy) {
 		try {
 			Date d = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			searchDate = sdf.format(d);
+			searchdate = sdf.format(d);
 			stmt = conn.createStatement();
 			
 			System.out.println(content);
@@ -44,8 +44,8 @@ public class UserDAO {
 			content.replaceAll("\'", "");
 			System.out.println(content);
 			
-			String sql = "INSERT INTO userinfo.userinfo (userId, dateTime, fileFath, content, keyword, accuracy) VALUES("
-					+ "'" + id + "','" + searchDate + "','" + fileFath + "','" + content + "','" + keyword + "','"
+			String sql = "INSERT INTO userinfo.userinfo (userId, dateTime, filepath, content, keyword, accuracy) VALUES("
+					+ "'" + id + "','" + searchdate + "','" + filepath + "','" + content + "','" + keyword + "','"
 					+ accuracy + "');";
 
 			stmt.executeUpdate(sql);
@@ -64,12 +64,12 @@ public class UserDAO {
 		}
 	}
 
-	public String getFilFath() {
-		return fileFath;
+	public String getFilePath() {
+		return filepath;
 	}
 
-	public void setFilFath(String fileFath) {
-		this.fileFath = fileFath;
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
 	}
 
 	public String getId() {
@@ -81,11 +81,11 @@ public class UserDAO {
 	}
 
 	public String getDate() {
-		return searchDate;
+		return searchdate;
 	}
 
 	public void setDate(String date) {
-		this.searchDate = date;
+		this.searchdate = date;
 	}
 
 	public String getContent() {

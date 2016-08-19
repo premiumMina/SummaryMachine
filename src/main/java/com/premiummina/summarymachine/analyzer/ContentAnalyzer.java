@@ -111,7 +111,6 @@ public class ContentAnalyzer {
 				String sentence = index + ". " + (String) it.next() + "\n";
 				sortedResultSentence = sortedResultSentence + sentence;
 			}
-			System.out.println(wordWeightMap);
 
 		} catch (Exception ee) {
 			System.out.println(ee);

@@ -60,21 +60,13 @@ public class WordGraphPanel extends JPanel {
 		super.paintComponent(g);
 
 		g.clearRect(0, 0, getWidth(), getHeight());
-
-		for (int cnt = 16; cnt >= 0; cnt--) {
-			g.drawString(cnt * 2 + " ", 25, 35 + 20 * cnt);
-			g.drawLine(50, 190 - 10 * cnt, 450, 190 - 10 * cnt);
-		}
-
-		/* 오른쪽 세로선 */
-		g.drawLine(50, 30, 50, 190);
+		/* 가로축 세로 */
+		g.drawLine(50, 30, 450, 30);
+		g.drawLine(50, 30, 50, 350);
 		for (int i = 0; i < count; i++) {
-			/* 가로축 */
-			g.drawString(resultKey[i], 60 + 40 * i, resultValue[i] * 10 + 45);
 			g.setColor(Color.BLACK);
-			/* 막대 그래프 */
-			g.fillRect(70 + 40 * i, 30, 10, resultValue[i] * 10);
-
+			g.fillRect(70 + 40 * i, 30, 10, 300 - i * 20);
+			g.drawString(resultKey[i] + " " + resultValue[i], 70 + 40 * i, 350 - i * 20);
 		}
 	}
 
