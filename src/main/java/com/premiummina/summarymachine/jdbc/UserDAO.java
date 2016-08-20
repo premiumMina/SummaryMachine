@@ -30,18 +30,11 @@ public class UserDAO {
 			Date d = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			String searchdate = sdf.format(d);
-			stmt = conn.createStatement();
-			
-			System.out.println(content);
-			content.replaceAll("\"", "");
-			System.out.println(content);
-			content.replaceAll("\'", "");
-			System.out.println(content);
-			
-			String sql = "INSERT INTO userinfo.userinfo (userId, searchdate, filepath, content, keyword, accuracy) VALUES("
-					+ "'" + userid + "','" + searchdate + "','" + filepath + "','" + content + "','" + keyword + "','"
-					+ accuracy + "');";
+			stmt = (Statement) conn.createStatement();
 
+			String sql = "insert into userinfo (userid, searchdate, filepath, content, keyword, accuracy) values(" + "'"
+					+ userid + "','" + searchdate + "','" + filepath + "','" + content + "','" + keyword + "','"
+					+ accuracy + "');";
 			stmt.executeUpdate(sql);
 
 		} catch (Exception e) {

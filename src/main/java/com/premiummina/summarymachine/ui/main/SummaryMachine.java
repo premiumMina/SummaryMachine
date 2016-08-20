@@ -41,11 +41,11 @@ public class SummaryMachine extends JFrame {
 		this.setLayout(new FlowLayout());
 		JPanel mainPanel = new JPanel();
 
-		RightPanel rightAllPanel = new RightPanel((screenWidth / 2 + 100), screenHeight - 50);
+		RightPanel rightAllPanel = new RightPanel((screenWidth / 2 + 150), screenHeight - 50);
 		rightAllPanel.initRightComponents();
-		
-		LeftPanel leftAllPanel = new LeftPanel((screenWidth / 3), screenHeight - 50);
-		leftAllPanel.setRightPanel(rightAllPanel); 
+
+		LeftPanel leftAllPanel = new LeftPanel((screenWidth / 3 - 50), screenHeight - 50);
+		leftAllPanel.setRightPanel(rightAllPanel);
 		leftAllPanel.initLeftComponents();
 
 		JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);

@@ -25,39 +25,54 @@ public class UserHistoryPanel extends JPanel {
 	private Statement stmt = null;
 	private Connection conn;
 	private UserDAO userDAO;
-	Object rowData[][];
-	public UserHistoryPanel(){
+
+	public UserHistoryPanel() {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(450, 150));
 		historyChart();
 	}
+
 	public void historyChart() {
 		try {
 			conn = new MySQLConn().getDBConnection();
 			stmt = (Statement) conn.createStatement();
 
-			String sql = "select * from userinfo.userinfo;";
+			String rowcountsql = "select count(*) as rowcount from userinfo;";
 			ResultSet rs = null;
-			rs = stmt.executeQuery(sql);
-			// getUserInsertDAO().getDbLine() -> 디비 총 갯수
-			int count = 0;
-			/* 행에 데이터베이스에 있는 줄 만큼의 값을 넣어야 하는데... */
-			String[][] input = new String[10][6];
-			while (rs.next()) {
-				input[count][0] = rs.getString("userid");
-				input[count][1] = rs.getString("searchdate");
-				input[count][2] = rs.getString("filepath");
-				input[count][3] = rs.getString("content");
-				input[count][4] = rs.getString("keyword");
-				input[count][5] = rs.getString("accuracy");
-				count++;
+			rs = stmt.executeQuery(rowcountsql);
+			rs.next();
+			int count = rs.getInt("rowcount") - 1;
 
-				final String columnNames[] = { "UserID", "Date", "File Path", "Content", "Keyword", "Accuracy" };
-				final JTable table = new JTable(input, columnNames);
-				JScrollPane scrollPane = new JScrollPane(table);
-				add(scrollPane, BorderLayout.CENTER);
-				
+			String sql = "select * from userinfo.userinfo;";
+			rs = null;
+			rs = stmt.executeQuery(sql);
+
+			String[][] data = new String[count + 1][6];
+
+			for (int index = 0; index <= count; index++) {
+				data[index][0] = new String();
+				data[index][1] = new String();
+				data[index][2] = new String();
+				data[index][3] = new String();
+				data[index][4] = new String();
+				data[index][5] = new String();
 			}
+
+			while (rs.next()) {
+				data[count][0] = rs.getString("userid");
+				data[count][1] = rs.getString("searchdate");
+				data[count][2] = rs.getString("filepath");
+				data[count][3] = rs.getString("content");
+				data[count][4] = rs.getString("keyword");
+				data[count][5] = rs.getString("accuracy");
+				count--;
+			}
+
+			final String columnNames[] = { "UserID", "Date", "File Path", "Content", "Keyword", "Accuracy" };
+			final JTable table = new JTable(data, columnNames);
+			JScrollPane scrollPane = new JScrollPane(table);
+			add(scrollPane, BorderLayout.CENTER);
+			rs.close();
 			stmt.close();
 			conn.close();
 		} catch (Exception e) {

@@ -17,7 +17,7 @@ import com.premiummina.summarymachine.ui.rightpanel.WordGraphPanel;
 /**
  * 검색 및 분석 시작 패널
  * 
- * @author premiumMina
+ * @author premiumMina 
  * created on 2016. 7. 18.
  */
 public class SearchPanel extends JPanel {
@@ -39,7 +39,7 @@ public class SearchPanel extends JPanel {
 		contentAnalyzer = new ContentAnalyzer();
 		webCrawler = new WebCrawler();
 		searchBtn = new JButton("search");
-		searchBtn.setBounds(240, 10, 80, 25);
+		searchBtn.setBounds(200, 10, 80, 25);
 		searchBtn.addActionListener(new SearchActionListener(contentAnalyzer));
 		this.add(searchBtn);
 	}
@@ -48,7 +48,8 @@ public class SearchPanel extends JPanel {
 		private ContentAnalyzer contentAnalyzer;
 		private UserDAO userDAO;
 
-		public SearchActionListener() {}
+		public SearchActionListener() {
+		}
 
 		public SearchActionListener(ContentAnalyzer contentAnalyzer) {
 			this.contentAnalyzer = contentAnalyzer;
@@ -81,9 +82,9 @@ public class SearchPanel extends JPanel {
 				rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
 				/* 1. 키워드 정확도 전달 */
 				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue());
-				insertSearchHistory();
+
 			}
-			
+			insertSearchHistory();
 		}
 
 		public void insertSearchHistory() {
@@ -99,6 +100,7 @@ public class SearchPanel extends JPanel {
 		public void setContentAnalyzer(ContentAnalyzer contentAnalyzer) {
 			this.contentAnalyzer = contentAnalyzer;
 		}
+
 	}
 
 	public WordAccuracyPanel getWordAccuracyPanel() {
@@ -140,6 +142,7 @@ public class SearchPanel extends JPanel {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
+	
 
 	public UserIdCheckPanel getUserIdCheckPanel() {
 		return userIdCheckPanel;
