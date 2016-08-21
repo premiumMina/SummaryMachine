@@ -44,16 +44,14 @@ public class UserIdCheckPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/* 
-				 * 아이디 중복 검사 설정
-				 * 현재는 아이디와 날짜가 PK여서 필요가 없음
-				 * 2016. 8. 17.
+				/*
+				 * 아이디 중복 검사 설정 현재는 아이디와 날짜가 PK여서 필요가 없음 2016. 8. 17.
 				 */
 			}
 		});
 		this.add(idOkBtn);
 	}
-	
+
 	public String getIdField() {
 		return idField.getText();
 	}

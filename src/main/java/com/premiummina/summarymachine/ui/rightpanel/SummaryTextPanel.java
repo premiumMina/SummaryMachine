@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 public class SummaryTextPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextArea summaryTextField;
-	
+
 	public void setSummaryTextField(String summaryText) {
 		summaryTextField.setText(summaryText);
 	}
@@ -30,9 +30,9 @@ public class SummaryTextPanel extends JPanel {
 		summaryTextField.setLineWrap(true);
 		summaryTextField.setEditable(false);
 		this.add(summaryTextField);
-		
+
 		JScrollPane scrollPane = new JScrollPane(summaryTextField);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        add(scrollPane);
+		add(scrollPane);
 	}
 }

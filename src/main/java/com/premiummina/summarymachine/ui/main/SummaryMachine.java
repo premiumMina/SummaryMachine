@@ -22,18 +22,17 @@ public class SummaryMachine extends JFrame {
 	private final int screenWidth = 1000;
 	private final int screenHeight = 1000;
 
-
 	public SummaryMachine() {
 		setTitle("Summary Machine");
 		setSize(screenWidth, screenHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		initComponents(getContentPane());
 		setVisible(true);
 	}
 
 	/**
 	 * 모든 컴포넌트를 초기화한다.
+	 * 
 	 * @author PremiumMina
 	 */
 	private void initComponents(Container contentPane) {

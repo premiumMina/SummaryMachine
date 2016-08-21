@@ -28,7 +28,6 @@ public class SearchPanel extends JPanel {
 	private FilePathPanel filePathPanel;
 	private ContentAnalyzer contentAnalyzer;
 	private WebCrawler webCrawler;
-	private UserDAO userDAO;
 	private UserIdCheckPanel userIdCheckPanel;
 	private WordGraphPanel wordGraphPanel;
 	private WordAccuracyPanel wordAccuracyPanel;
@@ -101,6 +100,14 @@ public class SearchPanel extends JPanel {
 			this.contentAnalyzer = contentAnalyzer;
 		}
 
+		public UserDAO getUserDAO() {
+			return userDAO;
+		}
+
+		public void setUserDAO(UserDAO userDAO) {
+			this.userDAO = userDAO;
+		}
+
 	}
 
 	public WordAccuracyPanel getWordAccuracyPanel() {
@@ -134,15 +141,6 @@ public class SearchPanel extends JPanel {
 	public void setSummaryTextPanel(SummaryTextPanel summaryTextPanel) {
 		this.summaryTextPanel = summaryTextPanel;
 	}
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-	
 
 	public UserIdCheckPanel getUserIdCheckPanel() {
 		return userIdCheckPanel;

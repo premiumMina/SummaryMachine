@@ -24,13 +24,6 @@ public class FilePathPanel extends JPanel {
 	private JTextField urlField;
 	private JButton upLoadBtn;
 
-	public void setUrlField(String urlField) {
-		this.urlField.setText(urlField);
-	}
-	public String getUrlField(){
-		return urlField.getText();
-	}
-	
 	public FilePathPanel() {
 		this.setLayout(new FlowLayout());
 		TitledBorder border = new TitledBorder("File Path");
@@ -61,5 +54,13 @@ public class FilePathPanel extends JPanel {
 			}
 		});
 		this.add(upLoadBtn);
+	}
+
+	public void setUrlField(String urlField) {
+		this.urlField.setText(urlField);
+	}
+
+	public String getUrlField() {
+		return urlField.getText();
 	}
 }

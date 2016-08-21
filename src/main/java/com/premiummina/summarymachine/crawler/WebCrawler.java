@@ -16,27 +16,28 @@ public class WebCrawler {
 	private String webUrl;
 	private StringBuilder crawlingResult;
 
-	public WebCrawler(){
+	public WebCrawler() {
 		crawlingResult = new StringBuilder();
 	}
-	
+
 	public void crawliing(String webUrl) {
 		URL url = null;
+		crawlingResult.setLength(0);
 		try {
 			setWebUrl(webUrl);
 			url = new URL(webUrl);
-			
+
 			URLConnection urlConn = url.openConnection();
 			setContentType(urlConn.getContentType().toUpperCase());
-			
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "EUC-KR"));
-			
+
 			String readLine = null;
-			
-			while((readLine = br.readLine())!=null) {
+
+			while ((readLine = br.readLine()) != null) {
 				crawlingResult.append(readLine);
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println(e);
 		}

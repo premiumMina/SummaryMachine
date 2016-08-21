@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.premiummina.summarymachine.analyzer.ContentAnalyzer;
-import com.premiummina.summarymachine.jdbc.UserDAO;
 import com.premiummina.summarymachine.ui.leftpanel.KeywordPanel;
 
 /**
@@ -26,8 +25,7 @@ public class RightPanel extends JPanel {
 	private SummaryTextPanel summaryTextPanel;
 	private ContentAnalyzer crawlerInWeb;
 	private UserHistoryPanel userHistoryPanel;
-	private InfoPanel helpPanel;
-	private UserDAO userDAO;
+	private InfoPanel infoPanel;
 
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
@@ -70,15 +68,14 @@ public class RightPanel extends JPanel {
 		/* 두 번째 탭 */
 		userHistoryPanel = new UserHistoryPanel();
 		userHistoryPanel.setBounds(0, 0, panelWidth, panelHeight);
-		userHistoryPanel.setUserDAO(userDAO);
 		rightSecondPage.add(userHistoryPanel);
-		
+
 		/* 세 번째 탭 */
-		helpPanel = new InfoPanel();
-		helpPanel.setBounds(0, 0, panelWidth, panelHeight);
-		rightThirdPage.add(helpPanel);
+		infoPanel = new InfoPanel();
+		infoPanel.setBounds(0, 0, panelWidth, panelHeight);
+		rightThirdPage.add(infoPanel);
 	}
-	
+
 	public WordAccuracyPanel getWordAccuracyPanel() {
 		return wordAccuracyPanel;
 	}

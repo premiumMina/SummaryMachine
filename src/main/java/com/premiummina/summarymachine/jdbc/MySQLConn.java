@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.premiummina.summarymachine.ui.rightpanel.UserHistoryPanel;
-
 /**
  * MySQL 커넥션 연결
  * 
@@ -14,11 +12,12 @@ import com.premiummina.summarymachine.ui.rightpanel.UserHistoryPanel;
  */
 public class MySQLConn {
 	private Connection conn;
+
 	public Connection getDBConnection() {
 		try {
 			/* 드라이버 로딩 : DriverManager에 등록한다. */
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/userinfo?useSSL=false";
+			String url = "jdbc:mysql://localhost/userinfo?useSSL=false&autoReconnect=true";
 			String username = "root";
 			String password = "root";
 

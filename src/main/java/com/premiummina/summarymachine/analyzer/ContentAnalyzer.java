@@ -39,31 +39,30 @@ public class ContentAnalyzer {
 		try {
 
 			List<String> contentBodyListByLine = new ArrayList<String>();
-			
+
 			int startIndex = 0;
 			startIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_START_FILTER);
-			
+
 			int endIndex = 0;
 			endIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_END_FILTER);
-			
-			
-			if(startIndex < 0 || endIndex < 0) {
+
+			if (startIndex < 0 || endIndex < 0) {
 				System.out.println("본문에 해당하는 내용을 찾을 수 없습니다.");
 				System.exit(0);
 			}
-			
+
 			String contentBody = rawCrawlingResult.substring(startIndex, endIndex);
 			contentBody.replaceAll(Utils.NAVER_NEWS_BODY_START_FILTER, "");
 			String extractedContentBody = removeHtmlTag(contentBody);
-			
+
 			String[] splitedContentBody = extractedContentBody.split("\n");
-			for(String contentSegment : splitedContentBody) {
+			for (String contentSegment : splitedContentBody) {
 				contentBodyListByLine.add(contentSegment);
 			}
-			
+
 			/* 키워드 추출 */
 			KeywordList kl = ke.extractKeyword(extractedContentBody, true);
-			
+
 			/*
 			 * 단어 가중치 맵 생성 Key : 단어 / Value : 가중치
 			 */
@@ -86,7 +85,7 @@ public class ContentAnalyzer {
 
 			if (wordWeightMap.containsKey(this.keywordFromUserInput)) {
 				int tmp = wordWeightMap.get(this.keywordFromUserInput);
-				accuracyValue = ((double)tmp / (double) numOfWords) * 100;
+				accuracyValue = ((double) tmp / (double) numOfWords) * 100;
 			}
 
 			/*
@@ -104,7 +103,7 @@ public class ContentAnalyzer {
 				}
 				sentenceWeightMap.put(content, sum);
 			}
-
+			sortedResultSentence = "";
 			/* 문장 가중치 맵을 가중치가 높은 순서대로 정렬한다. */
 			Iterator it = ContentAnalyzer.sortMap(sentenceWeightMap).iterator();
 			for (int index = 1; index < 4; index++) {
@@ -118,8 +117,9 @@ public class ContentAnalyzer {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private static List sortMap(final Map map) {
-		List<String> sortedSentenceList = new ArrayList();
+		List<String> sortedSentenceList = new ArrayList<String>();
 		sortedSentenceList.addAll(map.keySet());
 
 		Collections.sort(sortedSentenceList, new Comparator() {
@@ -140,7 +140,7 @@ public class ContentAnalyzer {
 		Pattern TAGS = Pattern.compile("<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>");
 		Pattern ENTITY_REFS = Pattern.compile("&[^;]+;");
 		Pattern WHITESPACE = Pattern.compile("\\s\\s+");
-		Pattern BR = Pattern.compile("\\.");
+		Pattern BR = Pattern.compile("다\\.");
 
 		Matcher m;
 
@@ -155,7 +155,7 @@ public class ContentAnalyzer {
 		m = WHITESPACE.matcher(content);
 		content = m.replaceAll(" ");
 		m = BR.matcher(content);
-		content = m.replaceAll("\\." + "\n");
+		content = m.replaceAll("다\\." + "\n");
 
 		return content;
 	}

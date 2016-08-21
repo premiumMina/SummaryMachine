@@ -19,7 +19,7 @@ public class LeftPanel extends JPanel {
 	private int panelWidth;
 	private int panelHeight;
 	private RightPanel rightPanel;
-	private ContentAnalyzer crawlerInWeb;
+	private ContentAnalyzer contentAnalyzer;
 
 	public LeftPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth + 20;
@@ -46,7 +46,7 @@ public class LeftPanel extends JPanel {
 		searchPanel.setUserIdCheckPanel(userIdCheckPanel);
 		searchPanel.setSummaryTextPanel(rightPanel.getSummaryTextPanel());
 		searchPanel.setWordGraphPanel(rightPanel.getWordGraphPanel());
-		searchPanel.setCrawlerInWeb(crawlerInWeb);
+		searchPanel.setCrawlerInWeb(contentAnalyzer);
 		this.add(searchPanel);
 	}
 

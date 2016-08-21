@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -28,21 +27,29 @@ public class WordGraphPanel extends JPanel {
 	private Integer[] resultValue = new Integer[10];
 
 	public WordGraphPanel() {
+		for (int index = 0; index < 10; index++) {
+			resultKey[index] = new String();
+			resultValue[index] = new Integer(0);
+		}
+
 		setSize(new Dimension(450, 200));
 		setBackground(Color.WHITE);
 		TitledBorder border = new TitledBorder("Word Frequency");
 		setBorder(border);
 		setVisible(true);
-		
-		for (int index = 0; index < 10; index++) {
-			resultKey[index] = new String();
-		}
+
 	}
 
 	/* 단어와 가중치 저장하는 배열 만들기 */
 	public void showGraph() {
-		/* 단어 가중치 큰 순서대로 정렬해야 함.*/
+
+		for (int index = 0; index < 10; index++) {
+			resultKey[index] = "";
+			resultValue[index] = 0;
+		}
+		/* 단어 가중치 큰 순서대로 정렬해야 함. */
 		Iterator<String> iterator = WordGraphPanel.sortMap(wordWeightMap).iterator();
+		this.count = 0;
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			resultKey[count] = key;
@@ -54,7 +61,7 @@ public class WordGraphPanel extends JPanel {
 		}
 		this.repaint();
 	}
-	
+
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
@@ -70,8 +77,9 @@ public class WordGraphPanel extends JPanel {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private static List sortMap(final Map map) {
-		List<String> sortedWordList = new ArrayList();
+		List<String> sortedWordList = new ArrayList<String>();
 		sortedWordList.addAll(map.keySet());
 
 		Collections.sort(sortedWordList, new Comparator() {

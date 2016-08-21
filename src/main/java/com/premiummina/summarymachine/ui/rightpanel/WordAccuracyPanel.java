@@ -39,7 +39,7 @@ public class WordAccuracyPanel extends JPanel {
 		keywordAccuracy.setEditable(false);
 		this.add(keywordAccuracy);
 	}
-	
+
 	public void setKeywordText(String keyword) {
 		keywordText.setText(keyword);
 	}
