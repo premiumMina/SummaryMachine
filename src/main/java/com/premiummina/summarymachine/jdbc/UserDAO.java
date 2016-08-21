@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -32,9 +33,9 @@ public class UserDAO {
 	 */
 	public void insertHistory(String userid, String filepath, String content, String keyword, double accuracy) {
 		try {
-			Date d = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			String searchdate = sdf.format(d);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+			Date currentTime = new Date();
+			String searchdate = formatter.format(currentTime);
 
 			pstmt = conn.prepareStatement("insert into userinfo "
 					+ "(userid, searchdate, filepath, content, keyword, accuracy)" + "values(?, ?, ?, ?, ?, ?)");

@@ -26,7 +26,7 @@ public class ContentAnalyzer {
 	private String sortedResultSentence;
 	private Map<String, Integer> wordWeightMap;
 	private String keywordFromUserInput;
-	private double accuracyValue;
+	private int accuracyValue;
 	private KeywordExtractor ke;
 
 	public ContentAnalyzer() {
@@ -82,10 +82,12 @@ public class ContentAnalyzer {
 			 * 좌측 패널에서 입력한 키워드와 문서내 단어들과 정확도 확인하는 알고리즘
 			 */
 			int numOfWords = wordListInContent.size();
-
+			double calValue;
+			accuracyValue=0;
 			if (wordWeightMap.containsKey(this.keywordFromUserInput)) {
 				int tmp = wordWeightMap.get(this.keywordFromUserInput);
-				accuracyValue = ((double) tmp / (double) numOfWords) * 100;
+				calValue = ((double) tmp / (double) numOfWords) * 100;
+				accuracyValue = (int) Math.round(calValue);
 			}
 
 			/*
@@ -160,11 +162,11 @@ public class ContentAnalyzer {
 		return content;
 	}
 
-	public double getAccuracyValue() {
+	public int getAccuracyValue() {
 		return accuracyValue;
 	}
 
-	public void setAccuracyValue(double accuracyValue) {
+	public void setAccuracyValue(int accuracyValue) {
 		this.accuracyValue = accuracyValue;
 	}
 

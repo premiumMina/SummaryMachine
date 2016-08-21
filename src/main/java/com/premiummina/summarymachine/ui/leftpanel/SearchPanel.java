@@ -80,8 +80,7 @@ public class SearchPanel extends JPanel {
 			if (keywordPanel.getCheckBox().isSelected()) {
 				rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
 				/* 1. 키워드 정확도 전달 */
-				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue());
-
+				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue()+"%");
 			}
 			insertSearchHistory();
 		}
