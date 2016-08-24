@@ -53,7 +53,6 @@ public class SummaryMachine extends JFrame {
 
 		mainPanel.add(jSplitPane);
 		contentPane.add(mainPanel);
-		setVisible(true);
 		setResizable(false);
 	}
 

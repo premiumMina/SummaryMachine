@@ -13,7 +13,9 @@ import java.sql.SQLException;
 public class MySQLConn {
 	private Connection conn;
 	private static boolean isDBOpend;
-
+	public MySQLConn(){
+		conn = getDBConnection();
+	}
 	public Connection getDBConnection() {
 		try {
 			/* 드라이버 로딩 : DriverManager에 등록한다. */
@@ -23,11 +25,12 @@ public class MySQLConn {
 			String password = "root";
 
 			conn = DriverManager.getConnection(url, username, password);
-			
+			isDBOpend = true;
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println("데이터베이스를 사용하지 않습니다. :" + e);
 			isDBOpend = false;
 		}
+		
 		return conn;
 	}
 
