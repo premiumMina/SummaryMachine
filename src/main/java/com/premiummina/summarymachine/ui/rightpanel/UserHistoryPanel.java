@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import com.premiummina.summarymachine.jdbc.MySQLConn;
 import com.premiummina.summarymachine.jdbc.UserDAO;
 
 /**
@@ -24,9 +25,11 @@ public class UserHistoryPanel extends JPanel {
 	public UserHistoryPanel() {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(450, 150));
-		this.userDAO = new UserDAO();
-		data = userDAO.historyGet();
-		historyChart();
+		if(MySQLConn.isDBOpend()) {
+			this.userDAO = new UserDAO();
+			data = userDAO.historyGet();
+			historyChart();
+		}
 
 	}
 

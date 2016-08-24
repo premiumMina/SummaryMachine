@@ -12,6 +12,7 @@ import java.sql.SQLException;
  */
 public class MySQLConn {
 	private Connection conn;
+	private static boolean isDBOpend;
 
 	public Connection getDBConnection() {
 		try {
@@ -22,10 +23,27 @@ public class MySQLConn {
 			String password = "root";
 
 			conn = DriverManager.getConnection(url, username, password);
-
+			
 		} catch (ClassNotFoundException | SQLException e) {
-			System.err.println("MySQLConn에서 Database를 사용할 수 없습니다. :" + e);
+			System.err.println("데이터베이스를 사용하지 않습니다. :" + e);
+			isDBOpend = false;
 		}
 		return conn;
+	}
+
+	public Connection getConn() {
+		return conn;
+	}
+
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+
+	public static boolean isDBOpend() {
+		return isDBOpend;
+	}
+
+	public static void setDBOpend(boolean isDBOpend) {
+		MySQLConn.isDBOpend = isDBOpend;
 	}
 }
