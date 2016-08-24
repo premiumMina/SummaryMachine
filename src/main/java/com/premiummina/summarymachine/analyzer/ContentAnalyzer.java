@@ -28,40 +28,50 @@ public class ContentAnalyzer {
 	private String keywordFromUserInput;
 	private int accuracyValue;
 	private KeywordExtractor ke;
-
+	private KeywordList kl;
+	private String extractedContentBody;
+	private List<String> contentBodyListByLine;
 	public ContentAnalyzer() {
 		ke = new KeywordExtractor();
 		sortedResultSentence = "";
 	}
 
-	public void analyze(String rawCrawlingResult) {
-
+	public void analyze(String rawCrawlingResult, int kind) {	
 		try {
+			if (kind == Utils.WEB_DOCUMENT) {
+				contentBodyListByLine = new ArrayList<String>();
 
-			List<String> contentBodyListByLine = new ArrayList<String>();
+				int startIndex = 0;
+				startIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_START_FILTER);
 
-			int startIndex = 0;
-			startIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_START_FILTER);
+				int endIndex = 0;
+				endIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_END_FILTER);
 
-			int endIndex = 0;
-			endIndex = rawCrawlingResult.indexOf(Utils.NAVER_NEWS_BODY_END_FILTER);
+				if (startIndex < 0 || endIndex < 0) {
+					System.out.println("본문에 해당하는 내용을 찾을 수 없습니다.");
+					System.exit(0);
+				}
 
-			if (startIndex < 0 || endIndex < 0) {
-				System.out.println("본문에 해당하는 내용을 찾을 수 없습니다.");
-				System.exit(0);
+				String contentBody = rawCrawlingResult.substring(startIndex, endIndex);
+				contentBody.replaceAll(Utils.NAVER_NEWS_BODY_START_FILTER, "");
+				extractedContentBody = removeHtmlTag(contentBody);
+
+				String[] splitedContentBody = extractedContentBody.split("\n");
+				for (String contentSegment : splitedContentBody) {
+					contentBodyListByLine.add(contentSegment);
+				}
+			} else if(kind == Utils.TEXT_DOCUMENT){
+				contentBodyListByLine = new ArrayList<String>();
+				extractedContentBody = removeHtmlTag(rawCrawlingResult);
+				
+				String[] splitedContentBody = extractedContentBody.split("\n");
+				for (String contentSegment : splitedContentBody) {
+					contentBodyListByLine.add(contentSegment);
+				}
 			}
-
-			String contentBody = rawCrawlingResult.substring(startIndex, endIndex);
-			contentBody.replaceAll(Utils.NAVER_NEWS_BODY_START_FILTER, "");
-			String extractedContentBody = removeHtmlTag(contentBody);
-
-			String[] splitedContentBody = extractedContentBody.split("\n");
-			for (String contentSegment : splitedContentBody) {
-				contentBodyListByLine.add(contentSegment);
-			}
-
+		
 			/* 키워드 추출 */
-			KeywordList kl = ke.extractKeyword(extractedContentBody, true);
+			kl = ke.extractKeyword(extractedContentBody, true);
 
 			/*
 			 * 단어 가중치 맵 생성 Key : 단어 / Value : 가중치
@@ -83,7 +93,7 @@ public class ContentAnalyzer {
 			 */
 			int numOfWords = wordListInContent.size();
 			double calValue;
-			accuracyValue=0;
+			accuracyValue = 0;
 			if (wordWeightMap.containsKey(this.keywordFromUserInput)) {
 				int tmp = wordWeightMap.get(this.keywordFromUserInput);
 				calValue = ((double) tmp / (double) numOfWords) * 100;

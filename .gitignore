@@ -1,5 +1,11 @@
+# Project Settings
 .classpath
 .settings/
 .project
-bin/
-/target/
+/bin/
+
+# Mac Settings
+.DS_Store
+
+# deploy
+target/

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.mysql.jdbc.Util;
 import com.premiummina.summarymachine.analyzer.ContentAnalyzer;
 import com.premiummina.summarymachine.crawler.WebCrawler;
 import com.premiummina.summarymachine.jdbc.UserDAO;
@@ -13,6 +14,7 @@ import com.premiummina.summarymachine.ui.rightpanel.RightPanel;
 import com.premiummina.summarymachine.ui.rightpanel.SummaryTextPanel;
 import com.premiummina.summarymachine.ui.rightpanel.WordAccuracyPanel;
 import com.premiummina.summarymachine.ui.rightpanel.WordGraphPanel;
+import com.premiummina.summarymachine.utils.Utils;
 
 /**
  * 검색 및 분석 시작 패널
@@ -65,10 +67,16 @@ public class SearchPanel extends JPanel {
 				contentAnalyzer.setKeywordFromUserInput(keywordPanel.getKeyword());
 
 				if (filePathPanel.getUrlField().startsWith("http")) {
-					webCrawler.crawliing(filePathPanel.getUrlField());
-					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString());
+					webCrawler.crawling(filePathPanel.getUrlField(),Utils.WEB_DOCUMENT);
+					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString(),0);
 					summaryTextPanel.setSummaryTextField(contentAnalyzer.getSortedResultSentence());
 					/* 단어와 가중치를 넘긴다 */
+					wordGraphPanel.setWordWeightMap(contentAnalyzer.getWordWeightMap());
+					wordGraphPanel.showGraph();
+				}else if(filePathPanel.getUrlField().endsWith(".rtf")){
+					webCrawler.crawling(filePathPanel.getUrlField(),1);
+					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString(),Utils.TEXT_DOCUMENT);
+					summaryTextPanel.setSummaryTextField(contentAnalyzer.getSortedResultSentence());
 					wordGraphPanel.setWordWeightMap(contentAnalyzer.getWordWeightMap());
 					wordGraphPanel.showGraph();
 				}
