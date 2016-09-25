@@ -75,22 +75,26 @@ public class SearchPanel extends JPanel {
 					wordGraphPanel.showGraph();
 				}else if(filePathPanel.getUrlField().endsWith(".rtf")){
 					webCrawler.crawling(filePathPanel.getUrlField(),1);
-					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString(),Utils.TEXT_DOCUMENT);
+					contentAnalyzer.analyze(webCrawler.getCrawlingResult().toString(), Utils.TEXT_DOCUMENT);
 					summaryTextPanel.setSummaryTextField(contentAnalyzer.getSortedResultSentence());
 					wordGraphPanel.setWordWeightMap(contentAnalyzer.getWordWeightMap());
 					wordGraphPanel.showGraph();
 				}
+
+				/* 문서 내용의 분석과 3줄 추출작업이 끝난 후에 해야 하는 작업 */
+
+				/* 키워드와 문서의 정확도를 알기위해 추가된 옵션 패널 */
+				if (keywordPanel.getCheckBox().isSelected()) {
+					rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
+					/* 1. 키워드 정확도 전달 */
+					rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue() + "%");
+				}
+				insertSearchHistory();
+
+			} else {
+				System.out.println("다시 확인하세요");
 			}
 
-			/* 문서 내용의 분석과 3줄 추출작업이 끝난 후에 해야 하는 작업 */
-
-			/* 키워드와 문서의 정확도를 알기위해 추가된 옵션 패널 */
-			if (keywordPanel.getCheckBox().isSelected()) {
-				rightPanel.getWordAccuracyPanel().setKeywordText((keywordPanel.getKeyword()));
-				/* 1. 키워드 정확도 전달 */
-				rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue()+"%");
-			}
-			insertSearchHistory();
 		}
 
 		public void insertSearchHistory() {
