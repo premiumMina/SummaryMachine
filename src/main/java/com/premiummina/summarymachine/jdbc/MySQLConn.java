@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class MySQLConn {
 	private Connection conn;
 	private static boolean isDBOpend;
+	
 	public MySQLConn(){
 		conn = getDBConnection();
 	}

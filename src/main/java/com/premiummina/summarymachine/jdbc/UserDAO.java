@@ -21,8 +21,8 @@ public class UserDAO {
 	private Statement stmt = null;
 	private String[][] data;
 	
-	public UserDAO() {
-		conn = new MySQLConn().getDBConnection();
+	public UserDAO(MySQLConn connection) {
+		conn = connection.getConn();
 	}
 	
 	/**
@@ -63,7 +63,6 @@ public class UserDAO {
 
 	public String[][] historyGet() {
 		try {
-			conn = new MySQLConn().getDBConnection();
 			stmt = (Statement) conn.createStatement();
 
 			String rowcountsql = "SELECT COUNT(*) AS rowcount FROM userinfo;";

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 import com.premiummina.summarymachine.analyzer.ContentAnalyzer;
+import com.premiummina.summarymachine.jdbc.UserDAO;
 import com.premiummina.summarymachine.ui.rightpanel.RightPanel;
 
 /**
@@ -20,6 +21,7 @@ public class LeftPanel extends JPanel {
 	private int panelHeight;
 	private RightPanel rightPanel;
 	private ContentAnalyzer contentAnalyzer;
+	private UserDAO userDAO;
 
 	public LeftPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth + 20;
@@ -39,7 +41,7 @@ public class LeftPanel extends JPanel {
 		KeywordPanel keywordPanel = new KeywordPanel();
 		this.add(keywordPanel);
 
-		SearchPanel searchPanel = new SearchPanel();
+		SearchPanel searchPanel = new SearchPanel(this.userDAO);
 		searchPanel.setRightPanel(rightPanel);
 		searchPanel.setKeywordPanel(keywordPanel);
 		searchPanel.setFilePathPanel(filePathPanel);
@@ -52,5 +54,9 @@ public class LeftPanel extends JPanel {
 
 	public void setRightPanel(RightPanel rightPanel) {
 		this.rightPanel = rightPanel;
+	}
+	
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 }

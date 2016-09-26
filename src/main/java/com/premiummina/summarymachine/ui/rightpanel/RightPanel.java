@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.premiummina.summarymachine.analyzer.ContentAnalyzer;
+import com.premiummina.summarymachine.jdbc.UserDAO;
 import com.premiummina.summarymachine.ui.leftpanel.KeywordPanel;
 
 /**
@@ -26,6 +27,7 @@ public class RightPanel extends JPanel {
 	private ContentAnalyzer crawlerInWeb;
 	private UserHistoryPanel userHistoryPanel;
 	private InfoPanel infoPanel;
+	private UserDAO userDAO;
 
 	public RightPanel(int panelWidth, int panelHeight) {
 		this.panelWidth = panelWidth;
@@ -66,7 +68,7 @@ public class RightPanel extends JPanel {
 		rightFirstPage.add(wordAccuracyPanel);
 
 		/* 두 번째 탭 */
-		userHistoryPanel = new UserHistoryPanel();
+		userHistoryPanel = new UserHistoryPanel(this.userDAO);
 		userHistoryPanel.setBounds(0, 0, panelWidth, panelHeight);
 		rightSecondPage.add(userHistoryPanel);
 
@@ -90,5 +92,9 @@ public class RightPanel extends JPanel {
 
 	public ContentAnalyzer getCrawlerInWeb() {
 		return crawlerInWeb;
+	}
+	
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 }
