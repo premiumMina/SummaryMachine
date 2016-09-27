@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.mysql.jdbc.Util;
 import com.premiummina.summarymachine.analyzer.ContentAnalyzer;
 import com.premiummina.summarymachine.crawler.WebCrawler;
+import com.premiummina.summarymachine.jdbc.MySQLConn;
 import com.premiummina.summarymachine.jdbc.UserDAO;
 import com.premiummina.summarymachine.ui.rightpanel.RightPanel;
 import com.premiummina.summarymachine.ui.rightpanel.SummaryTextPanel;
@@ -34,14 +34,16 @@ public class SearchPanel extends JPanel {
 	private WordGraphPanel wordGraphPanel;
 	private WordAccuracyPanel wordAccuracyPanel;
 	private JButton searchBtn;
+	private UserDAO userDAO;
 
-	public SearchPanel() {
+	public SearchPanel(UserDAO userDAO) {
 		this.setLayout(null);
 		contentAnalyzer = new ContentAnalyzer();
 		webCrawler = new WebCrawler();
 		searchBtn = new JButton("search");
 		searchBtn.setBounds(200, 10, 80, 25);
-		searchBtn.addActionListener(new SearchActionListener(contentAnalyzer));
+		setUserDAO(userDAO);
+		searchBtn.addActionListener(new SearchActionListener(contentAnalyzer, this.userDAO));
 		this.add(searchBtn);
 	}
 
@@ -52,9 +54,9 @@ public class SearchPanel extends JPanel {
 		public SearchActionListener() {
 		}
 
-		public SearchActionListener(ContentAnalyzer contentAnalyzer) {
+		public SearchActionListener(ContentAnalyzer contentAnalyzer, UserDAO userDAO) {
 			this.contentAnalyzer = contentAnalyzer;
-			this.userDAO = new UserDAO();
+			this.userDAO = userDAO;
 		}
 
 		@Override
@@ -89,7 +91,11 @@ public class SearchPanel extends JPanel {
 					/* 1. 키워드 정확도 전달 */
 					rightPanel.getWordAccuracyPanel().setKeywordAccuracy(contentAnalyzer.getAccuracyValue() + "%");
 				}
-				insertSearchHistory();
+				
+				/* 데이터베이스를 사용하는 경우에만 히스토리 저장 */
+				if (MySQLConn.isDBOpend()) {
+					insertSearchHistory();
+				}
 
 			} else {
 				System.out.println("다시 확인하세요");
@@ -110,15 +116,6 @@ public class SearchPanel extends JPanel {
 		public void setContentAnalyzer(ContentAnalyzer contentAnalyzer) {
 			this.contentAnalyzer = contentAnalyzer;
 		}
-
-		public UserDAO getUserDAO() {
-			return userDAO;
-		}
-
-		public void setUserDAO(UserDAO userDAO) {
-			this.userDAO = userDAO;
-		}
-
 	}
 
 	public WordAccuracyPanel getWordAccuracyPanel() {
@@ -159,5 +156,9 @@ public class SearchPanel extends JPanel {
 
 	public void setUserIdCheckPanel(UserIdCheckPanel userIdCheckPanel) {
 		this.userIdCheckPanel = userIdCheckPanel;
+	}
+	
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 }

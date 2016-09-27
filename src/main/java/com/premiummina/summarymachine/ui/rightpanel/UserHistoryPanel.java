@@ -3,7 +3,6 @@ package com.premiummina.summarymachine.ui.rightpanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,11 +22,12 @@ public class UserHistoryPanel extends JPanel {
 	private int count;
 	private String[][] data;
 
-	public UserHistoryPanel() {
+	public UserHistoryPanel(UserDAO userDAO) {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(450, 150));
+		setUserDAO(userDAO);
+		
 		if (MySQLConn.isDBOpend()) {
-			this.userDAO = new UserDAO();
 			data = userDAO.historyGet();
 			historyChart();
 		}
@@ -42,8 +42,8 @@ public class UserHistoryPanel extends JPanel {
 		setVisible(true);
 	}
 
-	public void setUserDAO(UserDAO userInsertDAO) {
-		this.userDAO = userInsertDAO;
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 	public int getCount() {
