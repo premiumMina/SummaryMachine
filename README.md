@@ -8,7 +8,7 @@ if you have any question.. please visit my blog. http://blog.naver.com/premiummi
 And you can see the program run movies. http://blog.naver.com/premiummina/220796039595
 
 <h2> 프로젝트 명 </h2>
-<h2> 거머리 내용 분석기 </h2> 
+거머리 내용 분석기
 
 <h2> 개발환경 </h2> 
 Java, MySQL
